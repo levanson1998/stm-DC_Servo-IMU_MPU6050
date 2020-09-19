@@ -21,6 +21,8 @@ float PID1[2];
 
 float error, PID_P[2], PID_I[2], PID_D[2];
 
+uint8_t TxBuffer[2], RxBuffer[7];
+
 void PID_Init(float *Kp, float *Ki, float *Kd, float Ts) {
 	for (int i = 0; i < 2; i++) {
 		PID_Kp[i] = *(Kp+i);
