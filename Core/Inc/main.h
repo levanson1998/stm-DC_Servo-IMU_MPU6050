@@ -83,6 +83,10 @@ void Error_Handler(void);
 #define ENCODER_L2_GPIO_Port GPIOB
 #define ENCODER_L1_Pin GPIO_PIN_7
 #define ENCODER_L1_GPIO_Port GPIOB
+#define IUM_SCL_Pin GPIO_PIN_8
+#define IUM_SCL_GPIO_Port GPIOB
+#define IMU_SDA_Pin GPIO_PIN_9
+#define IMU_SDA_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */

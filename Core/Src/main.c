@@ -33,6 +33,8 @@
 
 #include "../lib/pid_controller.h"
 #include "../lib/IMU_MPU6050.h"
+#include "pid_controller.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -61,6 +63,7 @@ volatile float enc[4];
 uint8_t receivebuffer[6], transmitData[3];
 uint8_t dataTransmit[16];
 float data_Receive[2];
+uint8_t DataBuffer[14];
 /* PID Controller*/
 float Kp[2] = {20.5f, 6.0f};
 float Ki[2] = {2.0f, 1.0f};
@@ -75,6 +78,7 @@ float A0, A1, A2, Aout, E0, E1, E2;
 float Aout1;
 /*test*/
 uint32_t t1,t2,t3,t4;
+uint16_t test1=0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -227,14 +231,18 @@ int main(void)
   HAL_UART_Receive_DMA(&huart2 ,&receivebuffer[0], 6);
 
   PID_Init(Kp, Ki, Kd, Ts);
+  MPU6050_INIT();
 
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+
   while (1)
   {
-
+	  test1++;
+	  HAL_I2C_Mem_Read_DMA(&hi2c1, MPU6050_DEFAULT_ADDRESS, MPU6050_RA_ACCEL_XOUT_H, I2C_MEMADD_SIZE_8BIT, DataBuffer[0], 14);
+	  HAL_Delay(1000);
 	  // HAL_GPIO_TogglePin(GPIOD, LED_BLU_Pin);
 
 //	  HAL_GPIO_TogglePin(GPIOD, LED_RED_Pin);
@@ -319,6 +327,13 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 //		Transmit_Uart(523.456, 321.654,12.356,1,20.214,3);
 	}
 }
+
+void HAL_I2C_MemRxCpltCallback(I2C_HandleTypeDef *hi2c){
+	if(hi2c->Instance==hi2c1.Instance){
+
+	}
+}
+
 /* USER CODE END 4 */
 
 /**
