@@ -5,23 +5,13 @@
  *      Author: son
  */
 
-
+#include "stdint.h"
 #include "pid_controller.h"
 
 #include "math.h"
 
-//volatile float PID_in[2];
-float PID_out[2];
-//float PID_P[2], PID_I[2], PID_D[2];
-float PID_Kp[2], PID_Ki[2], PID_Kd[2];
-float PID_Test[10];
-float PID_pre_err[2], PID_ppre_err[2];
-float PID_out_max=299.0f, PID_out_min=0.0f, PID_T;
-float PID1[2];
-
-float error, PID_P[2], PID_I[2], PID_D[2];
-
-uint8_t TxBuffer[2], RxBuffer[7];
+float PID_out_max=299.0f;
+float PID_out_min=0.1f;
 
 void PID_Init(float *Kp, float *Ki, float *Kd, float Ts) {
 	for (int i = 0; i < 2; i++) {

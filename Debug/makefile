@@ -48,7 +48,7 @@ all: stm_thesis.elf secondary-outputs
 
 # Tool invocations
 stm_thesis.elf: $(OBJS) $(USER_OBJS) /home/son/Documents/stmProject/stm_thesis/STM32F411VETX_FLASH.ld
-	arm-none-eabi-gcc -o "stm_thesis.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"/home/son/Documents/stmProject/stm_thesis/STM32F411VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="stm_thesis.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+	arm-none-eabi-gcc -o "stm_thesis.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"/home/son/Documents/stmProject/stm_thesis/STM32F411VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="stm_thesis.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

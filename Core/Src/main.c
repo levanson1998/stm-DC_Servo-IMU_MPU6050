@@ -34,6 +34,8 @@
 #include "../lib/pid_controller.h"
 #include "../lib/IMU_MPU6050.h"
 #include "pid_controller.h"
+#include "uart2pi.h"
+#include "motor.h"
 
 /* USER CODE END Includes */
 
@@ -54,135 +56,23 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-volatile float *velo;
-volatile int16_t encoder[2];
-volatile float /*enc[2], */test[10];
-volatile float enc[4];
 
-/* UART 2*/
-uint8_t receivebuffer[6], transmitData[3];
-uint8_t dataTransmit[16];
-float data_Receive[2];
-uint8_t DataBuffer[14];
 /* PID Controller*/
-float Kp[2] = {20.5f, 6.0f};
-float Ki[2] = {2.0f, 1.0f};
-float Kd[2] = {0.03f, 0.0f};
-float Ts = 5; // 5ms
-float vt;
 
-/*  interupt*/
-volatile float PID_current[2], v_target[2], *duty_cycle;
+float testt[10];
 
-float A0, A1, A2, Aout, E0, E1, E2;
-float Aout1;
-/*test*/
-uint32_t t1,t2,t3,t4;
-uint16_t test1=0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 /* USER CODE BEGIN PFP */
-void Control_Motor(int16_t duty_l,int16_t duty_r);
-float * Get_Velocity();
+
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-void Control_Motor(int16_t duty_r,int16_t duty_l){
-	test[0]=duty_r;
-	test[1]=duty_l;
 
 
-
-	HAL_GPIO_WritePin(GPIOD, MOTOR_DIR_R_Pin, GPIO_PIN_RESET);
-	__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, duty_r);
-
-	HAL_GPIO_WritePin(GPIOD, MOTOR_DIR_L_Pin, GPIO_PIN_RESET);
-	__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, 0);
-
-
-	HAL_GPIO_TogglePin(GPIOD, LED_ORG_Pin);
-
-/*
-	if(duty_l>=0){
-		HAL_GPIO_WritePin(GPIOD, MOTOR_DIR_L_Pin, GPIO_PIN_RESET);
-		__HAL_TIM_SET_COMPARE(&htim1, MOTOR_L_Pin, 100);
-	}
-	else{
-		HAL_GPIO_WritePin(GPIOD, MOTOR_DIR_L_Pin, GPIO_PIN_SET);
-		__HAL_TIM_SET_COMPARE(&htim1, MOTOR_L_Pin, duty_l);
-	}
-
-	if(duty_r>=0){
-		HAL_GPIO_WritePin(GPIOD, MOTOR_DIR_R_Pin, GPIO_PIN_RESET);
-		__HAL_TIM_SET_COMPARE(&htim1, MOTOR_R_Pin, duty_r);
-	}
-	else{
-		HAL_GPIO_WritePin(GPIOD, MOTOR_DIR_R_Pin, GPIO_PIN_SET);
-		__HAL_TIM_SET_COMPARE(&htim1, MOTOR_R_Pin, duty_r);
-	}
-*/
-}
-
-float * Get_Velocity(){
-//	volatile float enc[2];
-	enc[0]= fabs((TIM2->CNT)-5000.0F);
-	if ((TIM2->CNT)>=5000) enc[1]=-1;
-	else enc[1]=1;
-
-	enc[2]= fabs((TIM4->CNT)-5000.0F);
-	if ((TIM4->CNT)>5000) enc[3]=1;
-	else enc[3]=-1;
-
-	TIM4->CNT=5000;
-	TIM2->CNT=5000;
-
-	return enc;
-}
-
-// data1: x, data2: y, Kpid
-void Transmit_Uart(float x, float y, float v_l, int dir_l, float v_r, int dir_r){
-
-
-	dataTransmit[0]=(uint8_t)((((uint16_t)x)|0x00FF)>>8); // 8 bit H
-	dataTransmit[1]=(uint8_t)((((uint16_t)x)|0xFF00)); 	      // 8 bit L
-	dataTransmit[2]=(uint8_t)((((uint16_t)((x-(uint16_t)x)*10000.0f))|0x00FF)>>8); // 8 bit H
-	dataTransmit[3]=(uint8_t)((((uint16_t)((x-(uint16_t)x)*10000.0f))|0xFF00));    // 8 bit L
-
-	dataTransmit[4]=(uint8_t)((((uint16_t)y)|0x00FF)>>8); // 8 bit H
-	dataTransmit[5]=(uint8_t)((((uint16_t)y)|0xFF00)); 	      // 8 bit L
-	dataTransmit[6]=(uint8_t)((((uint16_t)((y-(uint16_t)y)*10000.0f))|0x00FF)>>8); // 8 bit H
-	dataTransmit[7]=(uint8_t)((((uint16_t)((y-(uint16_t)y)*10000.0f))|0xFF00));    // 8 bit L
-
-	dataTransmit[8]=(uint8_t)v_l; // 8 bit truoc dau .
-	dataTransmit[9]=(uint8_t)((((uint16_t)((v_l-(uint16_t)v_l)*10000.0f))|0x00FF)>>8); // 8 bit H
-	dataTransmit[10]=(uint8_t)((((uint16_t)((v_l-(uint16_t)v_l)*10000.0f))|0xFF00));    // 8 bit L
-
-	dataTransmit[11]=(uint8_t)dir_l;
-
-	dataTransmit[12]=(uint8_t)v_r; // 8 bit truoc dau .
-	dataTransmit[13]=(uint8_t)((((uint16_t)((v_r-(uint16_t)v_r)*10000.0f))|0x00FF)>>8); // 8 bit H
-	dataTransmit[14]=(uint8_t)((((uint16_t)((v_r-(uint16_t)v_r)*10000.0f))|0xFF00));    // 8 bit L
-
-	dataTransmit[15]=(uint8_t)dir_r;
-//	for(int i=0;i<14;i++){
-//		dataTransmit[i]=0xF3;
-//	}
-
-	HAL_UART_Transmit(&huart2, &dataTransmit[0], sizeof(dataTransmit), 1);
-//	dataTransmit[8]=(int8_t)v_l; // 8 bit truoc dau .
-//	dataTransmit[9]=(int8_t)((((int16_t)((x-(int16_t)v_l)*10000))|0xF0)>>8); // 8 bit H
-//	dataTransmit[10]=(int8_t)((((int16_t)((x-(int16_t)v_l)*10000))|0x0F));    // 8 bit L
-}
-
-float *Receive_Uart(){
-	data_Receive[0]=(float)(receivebuffer[0]+(float)(((uint16_t)((receivebuffer[1]<<8)|receivebuffer[2])/10000.0f)));
-	data_Receive[1]=(float)(receivebuffer[3]+(float)(((uint16_t)((receivebuffer[4]<<8)|receivebuffer[5])/10000.0f)));
-
-	return data_Receive;
-}
 /* USER CODE END 0 */
 
 /**
@@ -230,7 +120,6 @@ int main(void)
   HAL_TIM_Encoder_Start(&htim2, TIM_CHANNEL_ALL);
   HAL_UART_Receive_DMA(&huart2 ,&receivebuffer[0], 6);
 
-  PID_Init(Kp, Ki, Kd, Ts);
   MPU6050_INIT();
 
   /* USER CODE END 2 */
@@ -240,13 +129,7 @@ int main(void)
 
   while (1)
   {
-	  test1++;
-	  HAL_I2C_Mem_Read_DMA(&hi2c1, MPU6050_DEFAULT_ADDRESS, MPU6050_RA_ACCEL_XOUT_H, I2C_MEMADD_SIZE_8BIT, DataBuffer[0], 14);
-	  HAL_Delay(1000);
-	  // HAL_GPIO_TogglePin(GPIOD, LED_BLU_Pin);
 
-//	  HAL_GPIO_TogglePin(GPIOD, LED_RED_Pin);
-//	  HAL_Delay(1000);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -301,38 +184,58 @@ void SystemClock_Config(void)
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 //	delay 5ms
 	if(htim->Instance==htim5.Instance){
-		volatile float *data_Receive;
-		t1++;
-		HAL_GPIO_TogglePin(GPIOD, LED_GRE_Pin);
-		velo = Get_Velocity();
-		data_Receive = Receive_Uart();
+/*		volatile float *data_Receive;*/
+//		HAL_GPIO_TogglePin(GPIOD, LED_GRE_Pin);
+//		velo = Get_Velocity();
+/*		data_Receive = Receive_Uart();*/
+/*
 		for(int i=0;i<2;i++){
 			PID_current[i]=*(velo+i*2);
 //			v_target[i]=*(data_Receive+i);
 //			v_target[i] = 10.0f;
 		}
-
+*/
+/*
 		duty_cycle = PID_Calculate(v_target, PID_current);
 		test[2]=*(duty_cycle);
 		test[3]=*(duty_cycle+1);
 		Control_Motor(*(duty_cycle), *(duty_cycle+1));
+*/
+
+
 	}
 //	delay 100ms
 	else if(htim->Instance==htim9.Instance){
-		HAL_GPIO_TogglePin(GPIOD, LED_RED_Pin);
-		v_target[0] = 15.0;
+//		IMU_READ_DMA();
+
+// 		ss = sensor
+		struct data ss = ReadMPU();
+		testt[0] = ss.accel_x;
+		testt[1] = ss.accel_y;
+		testt[2] = ss.accel_z;
+		testt[3] = ss.gyro_x;
+		testt[4] = ss.gyro_y;
+		testt[5] = ss.gyro_z;
+		testt[6] = ss.temp;
+//		HAL_GPIO_TogglePin(GPIOD, LED_RED_Pin);
+		uint16_t ecA, ecB;
+		uint8_t motor_dir1;
+		UartTransmit(ss.accel_x, ss.gyro_x, ecA, ecB, motor_dir1);
 /*		if(v_target[0] >= 19.0f) vt=-0.5f;
-		else if (v_target[0] <= 2.0) vt = 0.5f;*/
-		Transmit_Uart(523.456, 321.654,*(velo), *(velo+1), *(velo+2), *(velo+3));
+		else if (v_target[0] <= 2.0) vt = 0.5f;
+*/
+//		Transmit_Uart(523.456, 321.654,*(velo), *(velo+1), *(velo+2), *(velo+3));
 //		Transmit_Uart(523.456, 321.654,12.356,1,20.214,3);
 	}
 }
 
+/*
 void HAL_I2C_MemRxCpltCallback(I2C_HandleTypeDef *hi2c){
 	if(hi2c->Instance==hi2c1.Instance){
 
 	}
 }
+*/
 
 /* USER CODE END 4 */
 

@@ -14,7 +14,7 @@
 #endif
 
 /* init */
- uint8_t TxBuffer[2], RxBuffer[7];
+
 
  /* Includes */
 
@@ -325,7 +325,28 @@
 // Temperature offset
 #define Temp_offset   36.53F
 
+#define RA_TO_DEC400	63.66197724F
+#define RA_TO_DEC		57.2957795131F
+
+uint8_t TxBuffer[2], RxBuffer[7];
+
+
+uint8_t DataBuffer[14];
+
+//struct data imu;
+struct data{
+	float temp;
+	float gyro_x;
+	float gyro_y;
+	float gyro_z;
+	float accel_x;
+	float accel_y;
+	float accel_z;
+};
+
 void MPU6050_INIT();
+void IMU_READ_DMA();
+struct data ReadMPU();
 
 
 #endif /* LIB_IMU_MPU6050_H_ */
