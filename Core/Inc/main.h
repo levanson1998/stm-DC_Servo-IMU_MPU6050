@@ -61,14 +61,18 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 #define ENCODER_R1_Pin GPIO_PIN_5
 #define ENCODER_R1_GPIO_Port GPIOA
-#define MOTOR_L_Pin GPIO_PIN_9
-#define MOTOR_L_GPIO_Port GPIOE
-#define MOTOR_R_Pin GPIO_PIN_11
-#define MOTOR_R_GPIO_Port GPIOE
-#define MOTOR_DIR_R_Pin GPIO_PIN_10
-#define MOTOR_DIR_R_GPIO_Port GPIOD
-#define MOTOR_DIR_L_Pin GPIO_PIN_11
-#define MOTOR_DIR_L_GPIO_Port GPIOD
+#define EN_L_Pin GPIO_PIN_9
+#define EN_L_GPIO_Port GPIOE
+#define EN_R_Pin GPIO_PIN_11
+#define EN_R_GPIO_Port GPIOE
+#define LPWM_R_Pin GPIO_PIN_8
+#define LPWM_R_GPIO_Port GPIOD
+#define RPWM_R_Pin GPIO_PIN_9
+#define RPWM_R_GPIO_Port GPIOD
+#define LPWM_L_Pin GPIO_PIN_10
+#define LPWM_L_GPIO_Port GPIOD
+#define RPWM_L_Pin GPIO_PIN_11
+#define RPWM_L_GPIO_Port GPIOD
 #define LED_GRE_Pin GPIO_PIN_12
 #define LED_GRE_GPIO_Port GPIOD
 #define LED_ORG_Pin GPIO_PIN_13

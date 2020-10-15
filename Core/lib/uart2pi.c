@@ -27,7 +27,7 @@
 		chieu: 1 byte
 		data: 1 byte
 */
-void Dec2Bytes(uint32_t accel, uint32_t gyro, uint16_t encA, uint16_t encB, uint8_t motor_dir){
+void Dec2Bytes(uint32_t accel, uint32_t gyro, int16_t encA, int16_t encB, uint8_t motor_dir){
 	dataTransmit[0]=(uint8_t)((((uint16_t)encA)|0x00FF)>>8); // 8 bit H
 	dataTransmit[1]=(uint8_t)((((uint16_t)encA)|0xFF00)); 	      // 8 bit L
 
@@ -56,7 +56,11 @@ void Byte2Dec(){
 	k[3] = (float)(((int16_t)receivebuffer[6]<<8)|(int16_t)receivebuffer[7]);
 }
 
-void UartTransmit(uint32_t accel, uint32_t gyro, uint16_t encA, uint16_t encB, uint8_t motor_dir){
+/*
+ *
+
+*/
+void UartTransmit(uint32_t accel, uint32_t gyro, int16_t encA, int16_t encB, uint8_t motor_dir){
 	Dec2Bytes(accel, gyro, encA, encB, motor_dir);
 
 	HAL_UART_Transmit(&huart2, &dataTransmit[0], sizeof(dataTransmit), 1);

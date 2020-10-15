@@ -38,8 +38,6 @@ uint8_t TxBuffer[2], RxBuffer[7];
 
 void PID_Init(float *Kp, float *Ki, float *Kd, float Ts);
 float *PID_Calculate(float *PID_in, float *PID_current1);
-void Control_Motor(int16_t duty_l,int16_t duty_r);
-float * Get_Velocity();
 
 /*
 float Kp[2] = {20.5f, 6.0f};

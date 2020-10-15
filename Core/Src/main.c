@@ -206,7 +206,6 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 	}
 //	delay 100ms
 	else if(htim->Instance==htim9.Instance){
-//		IMU_READ_DMA();
 
 // 		ss = sensor
 		struct data ss = ReadMPU();
@@ -217,25 +216,20 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 		testt[4] = ss.gyro_y;
 		testt[5] = ss.gyro_z;
 		testt[6] = ss.temp;
-//		HAL_GPIO_TogglePin(GPIOD, LED_RED_Pin);
-		uint16_t ecA, ecB;
-		uint8_t motor_dir1;
-		UartTransmit(ss.accel_x, ss.gyro_x, ecA, ecB, motor_dir1);
+		if (testt[8] <= fabs(testt[3])){
+			testt[8] = fabs(testt[3]);
+		}
+
+		volatile int16_t *velo;
+		velo = Get_Velocity();
+		UartTransmit(ss.accel_x, ss.gyro_x, *(velo), *(velo+2), 1);
 /*		if(v_target[0] >= 19.0f) vt=-0.5f;
 		else if (v_target[0] <= 2.0) vt = 0.5f;
 */
-//		Transmit_Uart(523.456, 321.654,*(velo), *(velo+1), *(velo+2), *(velo+3));
-//		Transmit_Uart(523.456, 321.654,12.356,1,20.214,3);
-	}
-}
-
-/*
-void HAL_I2C_MemRxCpltCallback(I2C_HandleTypeDef *hi2c){
-	if(hi2c->Instance==hi2c1.Instance){
 
 	}
 }
-*/
+
 
 /* USER CODE END 4 */
 

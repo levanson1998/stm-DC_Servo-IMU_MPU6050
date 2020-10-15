@@ -55,7 +55,6 @@ void MPU6050_INIT(){
 		// neu MPU6050 hoat dong binh thuong thi den sang
 		HAL_GPIO_WritePin(GPIOD, LED_GRE_Pin, GPIO_PIN_SET);
 //		HAL_GPIO_TogglePin(GPIOD, LED_GRE_Pin);
-		HAL_Delay(2000);
 	}
 	else
 	{
@@ -97,7 +96,7 @@ struct data ReadMPU(){
 	accel_z_temp = DataBuffer16[2];
 
 
-	mpu.accel_x = roundf(((atan2((double)accel_y_temp,(double)accel_z_temp)+M_PI)*RA_TO_DEC));
+	mpu.accel_x = roundf(((atan2((double)accel_y_temp,(double)accel_z_temp)+M_PI)*RA_TO_DEC*1000.0f));
 	mpu.accel_y = roundf((float)((atan2((double)accel_x_temp,(double)accel_z_temp))*RA_TO_DEC));
 	mpu.accel_z = roundf((float)((atan2((double)accel_x_temp,(double)accel_y_temp))*RA_TO_DEC));
 
