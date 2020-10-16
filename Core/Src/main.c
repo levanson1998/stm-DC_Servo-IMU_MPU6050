@@ -61,6 +61,11 @@
 
 float testt[10];
 
+float PID_Kp[2]={1.0,1.0};
+float PID_Ki[2]={1.0,1.0};
+float PID_Kd[2]={1.0,1.0};
+float PID_T = 0.005f;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -184,6 +189,9 @@ void SystemClock_Config(void)
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 //	delay 5ms
 	if(htim->Instance==htim5.Instance){
+//		float duty_cycle;
+
+//		duty_cycle = PID_Calculate(PID_in, PID_current);
 /*		volatile float *data_Receive;*/
 //		HAL_GPIO_TogglePin(GPIOD, LED_GRE_Pin);
 //		velo = Get_Velocity();
@@ -209,20 +217,22 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 
 // 		ss = sensor
 		struct data ss = ReadMPU();
-		testt[0] = ss.accel_x;
-		testt[1] = ss.accel_y;
-		testt[2] = ss.accel_z;
-		testt[3] = ss.gyro_x;
-		testt[4] = ss.gyro_y;
-		testt[5] = ss.gyro_z;
-		testt[6] = ss.temp;
-		if (testt[8] <= fabs(testt[3])){
-			testt[8] = fabs(testt[3]);
-		}
+//		testt[0] = ss.accel_x;
+//		testt[1] = ss.accel_y;
+//		testt[2] = ss.accel_z;
+//		testt[3] = ss.gyro_x;
+//		testt[4] = ss.gyro_y;
+//		testt[5] = ss.gyro_z;
+//		testt[6] = ss.temp;
 
 		volatile int16_t *velo;
 		velo = Get_Velocity();
-		UartTransmit(ss.accel_x, ss.gyro_x, *(velo), *(velo+2), 1);
+		testt[0] = *(velo);
+		testt[1] = *(velo+2);
+		testt[2] = ss.accel_x;
+		testt[3] = ss.gyro_x;
+
+		UartTransmit(*(velo), *(velo+2), ss.accel_x, ss.gyro_x, 1);
 /*		if(v_target[0] >= 19.0f) vt=-0.5f;
 		else if (v_target[0] <= 2.0) vt = 0.5f;
 */

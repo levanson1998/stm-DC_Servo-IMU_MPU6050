@@ -13,15 +13,21 @@
 float PID_out_max=299.0f;
 float PID_out_min=0.1f;
 
-void PID_Init(float *Kp, float *Ki, float *Kd, float Ts) {
-	for (int i = 0; i < 2; i++) {
-		PID_Kp[i] = *(Kp+i);
-		PID_Ki[i] = *(Ki+i);
-		PID_Kd[i] = *(Kd+i);
-	}
-	PID_T = Ts/1000.0f;
-}
+//void PID_Init(float *Kp, float *Ki, float *Kd, float Ts) {
+//	for (int i = 0; i < 2; i++) {
+//		PID_Kp[i] = *(Kp+i);
+//		PID_Ki[i] = *(Ki+i);
+//		PID_Kd[i] = *(Kd+i);
+//	}
+//	PID_T = Ts/1000.0f;
+//}
 
+/*
+ * PID_in is array 2 value (target L, target R)
+ * PID_current is array 2 value (velo L, velo R)
+ * return *PID_out is velo of 2 motors Left and Right
+
+*/
 float * PID_Calculate(float *PID_in, float *PID_current){
 //	float error, PID_P, PID_I, PID_D;
 //	volatile float PID_out[2];

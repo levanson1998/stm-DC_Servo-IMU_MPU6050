@@ -27,22 +27,22 @@
 		chieu: 1 byte
 		data: 1 byte
 */
-void Dec2Bytes(uint32_t accel, uint32_t gyro, int16_t encA, int16_t encB, uint8_t motor_dir){
-	dataTransmit[0]=(uint8_t)((((uint16_t)encA)|0x00FF)>>8); // 8 bit H
-	dataTransmit[1]=(uint8_t)((((uint16_t)encA)|0xFF00)); 	      // 8 bit L
+void Dec2Bytes(int16_t encA, int16_t encB, uint32_t accel, uint32_t gyro, uint8_t motor_dir){
+	dataTransmit[0]=(int)((((uint16_t)encA)|0x00FF)>>8); // 8 bit H
+	dataTransmit[1]=(int)((((uint16_t)encA)|0xFF00)); 	      // 8 bit L
 
-	dataTransmit[2]=(uint8_t)((((uint16_t)encB)|0x00FF)>>8); // 8 bit H
-	dataTransmit[3]=(uint8_t)((((uint16_t)encB)|0xFF00)); 	      // 8 bit L
+	dataTransmit[2]=(int)((((uint16_t)encB)|0x00FF)>>8); // 8 bit H
+	dataTransmit[3]=(int)((((uint16_t)encB)|0xFF00)); 	      // 8 bit L
 
-	dataTransmit[4]=(uint8_t)((((uint32_t)accel)|0xFF00FFFF)>>16); // 8 bit H
-	dataTransmit[5]=(uint8_t)((((uint32_t)accel)|0xFFFF00FF)>>8); 	      // 8 bit M
-	dataTransmit[6]=(uint8_t)((((uint32_t)accel)|0xFFFFFF00));		// 8 bit L
+	dataTransmit[4]=(int)((((uint32_t)accel)|0xFF00FFFF)>>16); // 8 bit H
+	dataTransmit[5]=(int)((((uint32_t)accel)|0xFFFF00FF)>>8); 	      // 8 bit M
+	dataTransmit[6]=(int)((((uint32_t)accel)|0xFFFFFF00));		// 8 bit L
 
-	dataTransmit[7]=(uint8_t)((((uint32_t)gyro)|0xFF00FFFF)>>16); // 8 bit H
-	dataTransmit[8]=(uint8_t)((((uint32_t)gyro)|0xFFFF00FF)>>8); 	      // 8 bit M
-	dataTransmit[9]=(uint8_t)((((uint32_t)gyro)|0xFFFFFF00));		// 8 bit L
+	dataTransmit[7]=(int)((((uint32_t)gyro)|0xFF00FFFF)>>16); // 8 bit H
+	dataTransmit[8]=(int)((((uint32_t)gyro)|0xFFFF00FF)>>8); 	      // 8 bit M
+	dataTransmit[9]=(int)((((uint32_t)gyro)|0xFFFFFF00));		// 8 bit L
 
-	dataTransmit[10] = motor_dir;
+	dataTransmit[10] = (int)motor_dir;
 }
 
 /*
@@ -50,9 +50,9 @@ void Dec2Bytes(uint32_t accel, uint32_t gyro, int16_t encA, int16_t encB, uint8_
 
 */
 void Byte2Dec(){
-	k[0] = (float)(((int16_t)receivebuffer[0]<<8)|(int16_t)receivebuffer[1]);
-	k[1] = (float)(((int16_t)receivebuffer[2]<<8)|(int16_t)receivebuffer[3]);
-	k[2] = (float)(((int16_t)receivebuffer[4]<<8)|(int16_t)receivebuffer[5]);
+	_velo[0] = (float)(((int16_t)receivebuffer[0]<<8)|(int16_t)receivebuffer[1]);
+	_velo[1] = (float)(((int16_t)receivebuffer[2]<<8)|(int16_t)receivebuffer[3]);
+	_motor_dir = (float)(((int16_t)receivebuffer[4]<<8)|(int16_t)receivebuffer[5]);
 	k[3] = (float)(((int16_t)receivebuffer[6]<<8)|(int16_t)receivebuffer[7]);
 }
 
@@ -60,8 +60,8 @@ void Byte2Dec(){
  *
 
 */
-void UartTransmit(uint32_t accel, uint32_t gyro, int16_t encA, int16_t encB, uint8_t motor_dir){
-	Dec2Bytes(accel, gyro, encA, encB, motor_dir);
+void UartTransmit(int16_t encA, int16_t encB, uint32_t accel, uint32_t gyro, uint8_t motor_dir){
+	Dec2Bytes(encA, encB, accel, gyro, motor_dir);
 
 	HAL_UART_Transmit(&huart2, &dataTransmit[0], sizeof(dataTransmit), 1);
 
