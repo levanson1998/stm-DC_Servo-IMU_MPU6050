@@ -27,7 +27,7 @@
 		chieu: 1 byte
 		data: 1 byte
 */
-void Dec2Bytes(int16_t encA, int16_t encB, uint32_t accel, uint32_t gyro, uint8_t motor_dir){
+void Dec2Bytes(int16_t encA, int16_t encB, uint32_t accel, int32_t gyro, uint8_t motor_dir){
 	dataTransmit[0]=(int)((((uint16_t)encA)|0x00FF)>>8); // 8 bit H
 	dataTransmit[1]=(int)((((uint16_t)encA)|0xFF00)); 	      // 8 bit L
 
@@ -38,11 +38,12 @@ void Dec2Bytes(int16_t encA, int16_t encB, uint32_t accel, uint32_t gyro, uint8_
 	dataTransmit[5]=(int)((((uint32_t)accel)|0xFFFF00FF)>>8); 	      // 8 bit M
 	dataTransmit[6]=(int)((((uint32_t)accel)|0xFFFFFF00));		// 8 bit L
 
-	dataTransmit[7]=(int)((((uint32_t)gyro)|0xFF00FFFF)>>16); // 8 bit H
-	dataTransmit[8]=(int)((((uint32_t)gyro)|0xFFFF00FF)>>8); 	      // 8 bit M
-	dataTransmit[9]=(int)((((uint32_t)gyro)|0xFFFFFF00));		// 8 bit L
+	dataTransmit[7]=(int)((((int32_t)gyro)|0xFF00FFFF)>>16); // 8 bit H
+	dataTransmit[8]=(int)((((int32_t)gyro)|0xFFFF00FF)>>8); 	      // 8 bit M
+	dataTransmit[9]=(int)((((int32_t)gyro)|0xFFFFFF00));		// 8 bit L
 
 	dataTransmit[10] = (int)motor_dir;
+	dataTransmit[11] = 0x0A; // new line (in python using 'serial.readline()' to read data)
 }
 
 /*
@@ -60,7 +61,7 @@ void Byte2Dec(){
  *
 
 */
-void UartTransmit(int16_t encA, int16_t encB, uint32_t accel, uint32_t gyro, uint8_t motor_dir){
+void UartTransmit(int16_t encA, int16_t encB, uint32_t accel, int32_t gyro, uint8_t motor_dir){
 	Dec2Bytes(encA, encB, accel, gyro, motor_dir);
 
 	HAL_UART_Transmit(&huart2, &dataTransmit[0], sizeof(dataTransmit), 1);

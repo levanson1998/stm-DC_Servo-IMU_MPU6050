@@ -12,8 +12,8 @@
 
 #endif /* LIB_UART2PI_H_ */
 
-void UartTransmit(int16_t encA, int16_t encB, uint32_t accel, uint32_t gyro, uint8_t motor_dir);
-void Dec2Bytes(int16_t encA, int16_t encB, uint32_t accel, uint32_t gyro, uint8_t motor_dir);
+void UartTransmit(int16_t encA, int16_t encB, uint32_t accel, int32_t gyro, uint8_t motor_dir);
+void Dec2Bytes(int16_t encA, int16_t encB, uint32_t accel, int32_t gyro, uint8_t motor_dir);
 void Byte2Dec();
 
 uint8_t dataTransmit[16];

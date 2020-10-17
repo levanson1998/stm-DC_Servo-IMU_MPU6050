@@ -61,6 +61,7 @@
 
 float testt[10];
 
+
 float PID_Kp[2]={1.0,1.0};
 float PID_Ki[2]={1.0,1.0};
 float PID_Kd[2]={1.0,1.0};
@@ -217,22 +218,17 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 
 // 		ss = sensor
 		struct data ss = ReadMPU();
-//		testt[0] = ss.accel_x;
-//		testt[1] = ss.accel_y;
-//		testt[2] = ss.accel_z;
-//		testt[3] = ss.gyro_x;
-//		testt[4] = ss.gyro_y;
-//		testt[5] = ss.gyro_z;
-//		testt[6] = ss.temp;
 
+		testt[9]++;
+		if (testt[9]>=65000)
+			testt[9]=0;
 		volatile int16_t *velo;
 		velo = Get_Velocity();
-		testt[0] = *(velo);
-		testt[1] = *(velo+2);
-		testt[2] = ss.accel_x;
-		testt[3] = ss.gyro_x;
 
-		UartTransmit(*(velo), *(velo+2), ss.accel_x, ss.gyro_x, 1);
+
+//		UartTransmit(*(velo), *(velo+2), ss.accel_x, ss.gyro_x, 1);
+		UartTransmit(testt[9], *(velo+2), ss.accel_x, ss.gyro_x, 1);
+
 /*		if(v_target[0] >= 19.0f) vt=-0.5f;
 		else if (v_target[0] <= 2.0) vt = 0.5f;
 */
