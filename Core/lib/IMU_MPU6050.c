@@ -79,8 +79,8 @@ void MPU6050_INIT(){
 		float accel_z;	Toc do goc z
 	};
 */
-struct data ReadMPU(){
-	struct data mpu;
+struct data_imu ReadMPU(){
+	struct data_imu mpu;
 	int8_t i;
 	int16_t DataBuffer16[7];
 	int16_t gyro_x_temp, gyro_y_temp, gyro_z_temp, accel_x_temp, accel_y_temp, accel_z_temp;

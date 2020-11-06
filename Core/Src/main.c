@@ -217,7 +217,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 	else if(htim->Instance==htim9.Instance){
 
 // 		ss = sensor
-		struct data ss = ReadMPU();
+		struct data_imu ss = ReadMPU();
 
 		testt[9]++;
 		if (testt[9]>=65000)
@@ -226,8 +226,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 		velo = Get_Velocity();
 
 
-//		UartTransmit(*(velo), *(velo+2), ss.accel_x, ss.gyro_x, 1);
-		UartTransmit(testt[9], *(velo+2), ss.accel_x, ss.gyro_x, 1);
+		UartTransmit(*(velo), *(velo+2), ss, 2);
 
 /*		if(v_target[0] >= 19.0f) vt=-0.5f;
 		else if (v_target[0] <= 2.0) vt = 0.5f;

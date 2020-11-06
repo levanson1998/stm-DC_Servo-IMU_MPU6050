@@ -34,6 +34,7 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Core/Src/../lib/pid_controller.h ../Core/Src/../lib/IMU_MPU6050.h \
  /home/son/Documents/stmProject/stm_thesis/Core/lib/pid_controller.h \
  /home/son/Documents/stmProject/stm_thesis/Core/lib/uart2pi.h \
+ /home/son/Documents/stmProject/stm_thesis/Core/lib/IMU_MPU6050.h \
  /home/son/Documents/stmProject/stm_thesis/Core/lib/motor.h
 
 ../Core/Inc/main.h:
@@ -117,5 +118,7 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 /home/son/Documents/stmProject/stm_thesis/Core/lib/pid_controller.h:
 
 /home/son/Documents/stmProject/stm_thesis/Core/lib/uart2pi.h:
+
+/home/son/Documents/stmProject/stm_thesis/Core/lib/IMU_MPU6050.h:
 
 /home/son/Documents/stmProject/stm_thesis/Core/lib/motor.h:

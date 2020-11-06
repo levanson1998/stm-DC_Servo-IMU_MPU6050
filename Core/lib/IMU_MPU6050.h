@@ -334,7 +334,7 @@ uint8_t TxBuffer[2], RxBuffer[7];
 uint8_t DataBuffer[14];
 
 //struct data imu;
-struct data{
+struct data_imu{
 	float temp;
 	float gyro_x;
 	float gyro_y;
@@ -346,7 +346,7 @@ struct data{
 
 void MPU6050_INIT();
 void IMU_READ_DMA();
-struct data ReadMPU();
+struct data_imu ReadMPU();
 
 
 #endif /* LIB_IMU_MPU6050_H_ */

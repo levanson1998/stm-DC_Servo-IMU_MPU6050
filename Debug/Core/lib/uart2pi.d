@@ -29,7 +29,7 @@ Core/lib/uart2pi.o: ../Core/lib/uart2pi.c ../Core/Inc/usart.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
- ../Core/lib/uart2pi.h
+ ../Core/lib/uart2pi.h ../Core/lib/IMU_MPU6050.h
 
 ../Core/Inc/usart.h:
 
@@ -96,3 +96,5 @@ Core/lib/uart2pi.o: ../Core/lib/uart2pi.c ../Core/Inc/usart.h \
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h:
 
 ../Core/lib/uart2pi.h:
+
+../Core/lib/IMU_MPU6050.h:
