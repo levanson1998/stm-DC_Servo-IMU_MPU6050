@@ -12,7 +12,7 @@
 
 #endif /* LIB_MOTOR_H_ */
 
-void Control_Motor(int16_t duty_r,int16_t duty_l, uint8_t dir_r, uint8_t dir_l);
+void Control_Motor(int16_t duty_r,int16_t duty_l, uint8_t dir_motor);
 volatile int16_t * Get_Velocity();
 
 volatile int16_t encoder[2];

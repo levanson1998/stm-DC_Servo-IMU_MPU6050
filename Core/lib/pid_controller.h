@@ -10,10 +10,13 @@
 
 #endif /* LIB_PID_CONTROLLER_H_ */
 
+//			  time   banh xe  gear encoder
+// updateVel=(0.005)/(0.096/2)*30*22
+#define  updateVel 68.75;
 
-extern volatile float PID_current[2];
-extern volatile float PID_in[2];
-extern float PID_out[2];
+extern volatile int16_t PID_current[2];
+//extern volatile float PID_in[2];
+extern float PID_out[3];
 extern float error, PID_P[2], PID_I[2], PID_D[2];
 extern float PID_Kp[2], PID_Ki[2], PID_Kd[2];
 extern float PID_pre_err[2], PID_ppre_err[2];
@@ -21,8 +24,9 @@ extern float PID_pre_err[2], PID_ppre_err[2];
 
 extern float A0, A1, A2, Aout, Aout1, E0, E1, E2;
 
+
 //volatile float PID_in[2];
-float PID_out[2];
+float PID_out[3];
 //float PID_P[2], PID_I[2], PID_D[2];
 float PID_Kp[2], PID_Ki[2], PID_Kd[2];
 float PID_Test[10];
@@ -37,7 +41,7 @@ float error, PID_P[2], PID_I[2], PID_D[2];
 uint8_t TxBuffer[2], RxBuffer[7];
 
 void PID_Init(float *Kp, float *Ki, float *Kd, float Ts);
-float *PID_Calculate(float *PID_in, float *PID_current1);
+float * PID_Calculate(float *PID_in, int PID_dir, volatile int16_t *PID_current);
 
 /*
 float Kp[2] = {20.5f, 6.0f};

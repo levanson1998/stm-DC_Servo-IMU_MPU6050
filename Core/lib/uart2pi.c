@@ -45,7 +45,6 @@ void Dec2Bytes(int16_t encA, int16_t encB, struct data_imu ss, uint8_t motor_dir
 	dataTransmit[11]=(int)((((uint32_t)ss.accel_z)|0xFFFF00FF)>>8); 	      // 8 bit M
 	dataTransmit[12]=(int)((((uint32_t)ss.accel_z)|0xFFFFFF00));		// 8 bit L
 
-
 	dataTransmit[13]=(int)((((int32_t)ss.gyro_x)|0xFF00FFFF)>>16); // 8 bit H
 	dataTransmit[14]=(int)((((int32_t)ss.gyro_x)|0xFFFF00FF)>>8); 	      // 8 bit M
 	dataTransmit[15]=(int)((((int32_t)ss.gyro_x)|0xFFFFFF00));		// 8 bit L
@@ -64,23 +63,25 @@ void Dec2Bytes(int16_t encA, int16_t encB, struct data_imu ss, uint8_t motor_dir
 
 /*
  * Input: uint8_t receivebuffer[16];
+ * velo[0]: left
+ * velo[1]: right
+ *
 
 */
 void Byte2Dec(){
-	_velo[0] = (float)(((int16_t)receivebuffer[0]<<8)|(int16_t)receivebuffer[1]);
-	_velo[1] = (float)(((int16_t)receivebuffer[2]<<8)|(int16_t)receivebuffer[3]);
-	_motor_dir = (float)(((int16_t)receivebuffer[4]<<8)|(int16_t)receivebuffer[5]);
-	k[3] = (float)(((int16_t)receivebuffer[6]<<8)|(int16_t)receivebuffer[7]);
+	_velo[0] = (float)receivebuffer[0] + (float)(((int16_t)receivebuffer[1]<<8)|(int16_t)receivebuffer[2])/10000.0F;
+	_velo[1] = (float)receivebuffer[3] + (float)(((int16_t)receivebuffer[4]<<8)|(int16_t)receivebuffer[5])/10000.0F;
+	_motor_dir = receivebuffer[6];
 }
 
 /*
  * Transmit from STM to RP3
+ * GPIO: PA2 -> TX
+ * 		 PA3 -> RX
 */
 void UartTransmit(int16_t encA, int16_t encB, struct data_imu ss, uint8_t motor_dir){
 
 	Dec2Bytes(encA,encB, ss, motor_dir);
-//	HAL_UART_Transmit(&huart2, &dataTransmit[0], sizeof(dataTransmit), 1);
-
-//	Byte2Dec();
-
+	HAL_UART_Transmit(&huart2, &dataTransmit[0], sizeof(dataTransmit), 1);
+	Byte2Dec();
 }

@@ -78,6 +78,9 @@ void MPU6050_INIT(){
 		float accel_y;	Toc do goc y
 		float accel_z;	Toc do goc z
 	};
+
+ * GPIO: PB9 -> IMU_SDA
+ * 		 PB8 -> IMU_SCL
 */
 struct data_imu ReadMPU(){
 	struct data_imu mpu;
@@ -96,7 +99,8 @@ struct data_imu ReadMPU(){
 	accel_z_temp = DataBuffer16[2];
 
 
-	mpu.accel_x = roundf(((atan2((double)accel_y_temp,(double)accel_z_temp)+M_PI)*RA_TO_DEC*1000.0f));
+//	mpu.accel_x = roundf(((atan2((double)accel_y_temp,(double)accel_z_temp)+M_PI)*RA_TO_DEC*1000.0f));
+	mpu.accel_x = roundf((float)((atan2((double)accel_y_temp,(double)accel_z_temp))*RA_TO_DEC));
 	mpu.accel_y = roundf((float)((atan2((double)accel_x_temp,(double)accel_z_temp))*RA_TO_DEC));
 	mpu.accel_z = roundf((float)((atan2((double)accel_x_temp,(double)accel_y_temp))*RA_TO_DEC));
 

@@ -124,7 +124,7 @@ int main(void)
   HAL_TIM_Base_Start_IT(&htim5);
   HAL_TIM_Encoder_Start(&htim4, TIM_CHANNEL_ALL);
   HAL_TIM_Encoder_Start(&htim2, TIM_CHANNEL_ALL);
-  HAL_UART_Receive_DMA(&huart2 ,&receivebuffer[0], 6);
+  HAL_UART_Receive_DMA(&huart2 ,&receivebuffer[0], 7);
 
   MPU6050_INIT();
 
@@ -190,9 +190,13 @@ void SystemClock_Config(void)
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 //	delay 5ms
 	if(htim->Instance==htim5.Instance){
-//		float duty_cycle;
 
-//		duty_cycle = PID_Calculate(PID_in, PID_current);
+		float *duty_cycles;
+
+		Get_Velocity();
+
+		duty_cycles = PID_Calculate(_velo, _motor_dir, enc);
+		Control_Motor(*(duty_cycles), *(duty_cycles+1), *(duty_cycles+2));
 /*		volatile float *data_Receive;*/
 //		HAL_GPIO_TogglePin(GPIOD, LED_GRE_Pin);
 //		velo = Get_Velocity();
@@ -222,16 +226,13 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 		testt[9]++;
 		if (testt[9]>=65000)
 			testt[9]=0;
-		volatile int16_t *velo;
-		velo = Get_Velocity();
 
+		UartTransmit(enc[0], enc[1], ss, 2);
 
-		UartTransmit(*(velo), *(velo+2), ss, 2);
-
-/*		if(v_target[0] >= 19.0f) vt=-0.5f;
+/*
+		if(v_target[0] >= 19.0f) vt=-0.5f;
 		else if (v_target[0] <= 2.0) vt = 0.5f;
 */
-
 	}
 }
 

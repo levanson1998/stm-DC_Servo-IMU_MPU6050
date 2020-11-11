@@ -19,7 +19,7 @@ void Dec2Bytes(int16_t encA, int16_t encB, struct data_imu ss, uint8_t motor_dir
 void Byte2Dec();
 
 uint8_t dataTransmit[16];
-uint8_t receivebuffer[16];
+uint8_t receivebuffer[7];
 float _velo[2];
-float _motor_dir;
+int _motor_dir;
 float k[4];
