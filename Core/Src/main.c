@@ -132,7 +132,6 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-
   while (1)
   {
 
@@ -194,11 +193,23 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 		float *duty_cycles;
 
 		Get_Velocity();
+		testt[0]=enc[0];
+		testt[1]=enc[1];
+
+		_motor_dir = 3;
+		_velo[0] = 400;
+		_velo[1] = 400;
 
 		duty_cycles = PID_Calculate(_velo, _motor_dir, enc);
 		Control_Motor(*(duty_cycles), *(duty_cycles+1), *(duty_cycles+2));
+//		Control_Motor(400, 400, 3);
+
+
+//		Control_Motor(*(duty_cycles), *(duty_cycles+1), *(duty_cycles+2));
+
+
 /*		volatile float *data_Receive;*/
-//		HAL_GPIO_TogglePin(GPIOD, LED_GRE_Pin);
+		HAL_GPIO_TogglePin(GPIOD, LED_ORG_Pin);
 //		velo = Get_Velocity();
 /*		data_Receive = Receive_Uart();*/
 /*
@@ -220,14 +231,11 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 //	delay 100ms
 	else if(htim->Instance==htim9.Instance){
 
+
 // 		ss = sensor
-		struct data_imu ss = ReadMPU();
+//		struct data_imu ss = ReadMPU();
 
-		testt[9]++;
-		if (testt[9]>=65000)
-			testt[9]=0;
-
-		UartTransmit(enc[0], enc[1], ss, 2);
+//		UartTransmit(enc[0], enc[1], ss, 2);
 
 /*
 		if(v_target[0] >= 19.0f) vt=-0.5f;

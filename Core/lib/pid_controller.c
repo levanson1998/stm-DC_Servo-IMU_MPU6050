@@ -31,7 +31,7 @@ float PID_out_min=0.1f;
 float * PID_Calculate(float *PID_in, int PID_dir, volatile int16_t *PID_current){
 //	float error, PID_P, PID_I, PID_D;
 //	volatile float PID_out[2];
-	PID_Test[2] = *(PID_current);
+
 	if (!(PID_dir&0x01)){
 		*(PID_in+0)=*(PID_in+0)*(-1);
 	}
@@ -41,6 +41,7 @@ float * PID_Calculate(float *PID_in, int PID_dir, volatile int16_t *PID_current)
 
 	int dir_= 0x00;
 	for (int i=0;i<2; i++){
+		PID_Test[i] = *(PID_current+i);
 		*(PID_in+i)*=updateVel;
 		PID_Test[i]=*(PID_in+i);
 		error = *(PID_in+i)-*(PID_current+i)/**enc[i*2+1]*/;
