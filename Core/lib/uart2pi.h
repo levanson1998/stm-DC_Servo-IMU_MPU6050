@@ -23,3 +23,4 @@ uint8_t receivebuffer[7];
 float _velo[2];
 int _motor_dir;
 float k[4];
+int32_t uart_test;

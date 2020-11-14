@@ -61,10 +61,9 @@
 
 float testt[10];
 
-
-float PID_Kp[2]={1.0,1.0};
-float PID_Ki[2]={1.0,1.0};
-float PID_Kd[2]={1.0,1.0};
+float PID_Kp[2]={25.0, 25.0};
+float PID_Ki[2]={100.0, 100.0};
+float PID_Kd[2]={0.1, 0.1};
 float PID_T = 0.005f;
 
 /* USER CODE END PV */
@@ -189,18 +188,17 @@ void SystemClock_Config(void)
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 //	delay 5ms
 	if(htim->Instance==htim5.Instance){
+		testt[7] = HAL_GetTick() - testt[8];
+		testt[8] = HAL_GetTick();
 
 		float *duty_cycles;
 
 		Get_Velocity();
-		testt[0]=enc[0];
-		testt[1]=enc[1];
 
-		_motor_dir = 3;
-		_velo[0] = 400;
-		_velo[1] = 400;
+//		enc[0] = 12;
+//		enc[1] = 10;
 
-		duty_cycles = PID_Calculate(_velo, _motor_dir, enc);
+		duty_cycles = PID_Calculate(_velo, _motor_dir, &enc[0]);
 		Control_Motor(*(duty_cycles), *(duty_cycles+1), *(duty_cycles+2));
 //		Control_Motor(400, 400, 3);
 
@@ -230,12 +228,15 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 	}
 //	delay 100ms
 	else if(htim->Instance==htim9.Instance){
-
+		testt[5] = HAL_GetTick() - testt[6];
+		testt[6] = HAL_GetTick();
 
 // 		ss = sensor
-//		struct data_imu ss = ReadMPU();
+		struct data_imu ss = ReadMPU();
 
-//		UartTransmit(enc[0], enc[1], ss, 2);
+		UartTransmit(enc[0], enc[1], ss, 2);
+
+
 
 /*
 		if(v_target[0] >= 19.0f) vt=-0.5f;

@@ -69,9 +69,18 @@ void Dec2Bytes(int16_t encA, int16_t encB, struct data_imu ss, uint8_t motor_dir
 
 */
 void Byte2Dec(){
+/*
 	_velo[0] = (float)receivebuffer[0] + (float)(((int16_t)receivebuffer[1]<<8)|(int16_t)receivebuffer[2])/10000.0F;
 	_velo[1] = (float)receivebuffer[3] + (float)(((int16_t)receivebuffer[4]<<8)|(int16_t)receivebuffer[5])/10000.0F;
 	_motor_dir = receivebuffer[6];
+*/
+
+
+	_motor_dir = 2;
+	_velo[0] = 0.04;
+	_velo[1] = 0.00;
+	uart_test += 1;
+
 }
 
 /*
@@ -84,4 +93,6 @@ void UartTransmit(int16_t encA, int16_t encB, struct data_imu ss, uint8_t motor_
 	Dec2Bytes(encA,encB, ss, motor_dir);
 	HAL_UART_Transmit(&huart2, &dataTransmit[0], sizeof(dataTransmit), 1);
 	Byte2Dec();
+
+
 }

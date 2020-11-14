@@ -17,4 +17,9 @@ volatile int16_t * Get_Velocity();
 
 volatile int16_t encoder[2];
 volatile float /*enc[2], */test[10];
-volatile int16_t enc[4];
+volatile int16_t enc[2];
+int16_t mt_test[6];
+
+
+
+
