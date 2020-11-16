@@ -89,6 +89,15 @@ volatile int16_t * Get_Velocity(){
 
 	TIM4->CNT=5000;
 	TIM2->CNT=5000;
+	int i;
+  	for (int i=0;i<2; i++){
+		if (enc[i]>=0){
+			enc[3]=enc[3]|(i+1);
+		}
+		else if (enc[i]<0){
+			enc[3]=enc[3]&(2-i);
+		}
+  	}
 
 	return 0;
 }

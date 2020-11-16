@@ -27,23 +27,23 @@
 		data: 1 byte
 */
 void Dec2Bytes(int16_t encA, int16_t encB, struct data_imu ss, uint8_t motor_dir){
-	dataTransmit[0]=(int)((((uint16_t)encA)|0x00FF)>>8); // 8 bit H
-	dataTransmit[1]=(int)((((uint16_t)encA)|0xFF00)); 	      // 8 bit L
+	dataTransmit[0]=(int)((((int16_t)encA)|0x00FF)>>8); // 8 bit H
+	dataTransmit[1]=(int)((((int16_t)encA)|0xFF00)); 	      // 8 bit L
 
-	dataTransmit[2]=(int)((((uint16_t)encB)|0x00FF)>>8); // 8 bit H
-	dataTransmit[3]=(int)((((uint16_t)encB)|0xFF00)); 	      // 8 bit L
+	dataTransmit[2]=(int)((((int16_t)encB)|0x00FF)>>8); // 8 bit H
+	dataTransmit[3]=(int)((((int16_t)encB)|0xFF00)); 	      // 8 bit L
 
-	dataTransmit[4]=(int)((((uint32_t)ss.accel_x)|0xFF00FFFF)>>16); // 8 bit H
-	dataTransmit[5]=(int)((((uint32_t)ss.accel_x)|0xFFFF00FF)>>8); 	      // 8 bit M
-	dataTransmit[6]=(int)((((uint32_t)ss.accel_x)|0xFFFFFF00));		// 8 bit L
+	dataTransmit[4]=(int)((((int32_t)ss.accel_x)|0xFF00FFFF)>>16); // 8 bit H
+	dataTransmit[5]=(int)((((int32_t)ss.accel_x)|0xFFFF00FF)>>8); 	      // 8 bit M
+	dataTransmit[6]=(int)((((int32_t)ss.accel_x)|0xFFFFFF00));		// 8 bit L
 
-	dataTransmit[7]=(int)((((uint32_t)ss.accel_y)|0xFF00FFFF)>>16); // 8 bit H
-	dataTransmit[8]=(int)((((uint32_t)ss.accel_y)|0xFFFF00FF)>>8); 	      // 8 bit M
-	dataTransmit[9]=(int)((((uint32_t)ss.accel_y)|0xFFFFFF00));		// 8 bit L
+	dataTransmit[7]=(int)((((int32_t)ss.accel_y)|0xFF00FFFF)>>16); // 8 bit H
+	dataTransmit[8]=(int)((((int32_t)ss.accel_y)|0xFFFF00FF)>>8); 	      // 8 bit M
+	dataTransmit[9]=(int)((((int32_t)ss.accel_y)|0xFFFFFF00));		// 8 bit L
 
-	dataTransmit[10]=(int)((((uint32_t)ss.accel_z)|0xFF00FFFF)>>16); // 8 bit H
-	dataTransmit[11]=(int)((((uint32_t)ss.accel_z)|0xFFFF00FF)>>8); 	      // 8 bit M
-	dataTransmit[12]=(int)((((uint32_t)ss.accel_z)|0xFFFFFF00));		// 8 bit L
+	dataTransmit[10]=(int)((((int32_t)ss.accel_z)|0xFF00FFFF)>>16); // 8 bit H
+	dataTransmit[11]=(int)((((int32_t)ss.accel_z)|0xFFFF00FF)>>8); 	      // 8 bit M
+	dataTransmit[12]=(int)((((int32_t)ss.accel_z)|0xFFFFFF00));		// 8 bit L
 
 	dataTransmit[13]=(int)((((int32_t)ss.gyro_x)|0xFF00FFFF)>>16); // 8 bit H
 	dataTransmit[14]=(int)((((int32_t)ss.gyro_x)|0xFFFF00FF)>>8); 	      // 8 bit M
@@ -58,7 +58,14 @@ void Dec2Bytes(int16_t encA, int16_t encB, struct data_imu ss, uint8_t motor_dir
 	dataTransmit[21]=(int)((((int32_t)ss.gyro_z)|0xFFFFFF00));		// 8 bit L
 
 	dataTransmit[22] = (int)motor_dir;
-	dataTransmit[23] = 0x0A; // new line (in python using 'serial.readline()' to read data)
+//	dataTransmit[23] = 0x0A; // new line (in python using 'serial.readline()' to read data)
+
+/*
+	uint8_t i;
+	for (i=0; i<23; i++){
+		dataTransmit[i] = i;
+	}
+*/
 }
 
 /*
@@ -69,18 +76,14 @@ void Dec2Bytes(int16_t encA, int16_t encB, struct data_imu ss, uint8_t motor_dir
 
 */
 void Byte2Dec(){
-/*
 	_velo[0] = (float)receivebuffer[0] + (float)(((int16_t)receivebuffer[1]<<8)|(int16_t)receivebuffer[2])/10000.0F;
 	_velo[1] = (float)receivebuffer[3] + (float)(((int16_t)receivebuffer[4]<<8)|(int16_t)receivebuffer[5])/10000.0F;
 	_motor_dir = receivebuffer[6];
-*/
 
 
-	_motor_dir = 2;
-	_velo[0] = 0.04;
-	_velo[1] = 0.00;
-	uart_test += 1;
-
+//	_motor_dir = 2;
+//	_velo[0] = 0.04;
+//	_velo[1] = 0.00;
 }
 
 /*
@@ -89,10 +92,17 @@ void Byte2Dec(){
  * 		 PA3 -> RX
 */
 void UartTransmit(int16_t encA, int16_t encB, struct data_imu ss, uint8_t motor_dir){
+	uart_test[0] = encA;
+	uart_test[1] = encB;
+	uart_test[2] = ss.accel_x;
+	uart_test[3] = ss.accel_y;
+	uart_test[4] = ss.accel_z;
+	uart_test[5] = ss.gyro_x;
+	uart_test[6] = ss.gyro_y;
+	uart_test[7] = ss.gyro_z;
 
-	Dec2Bytes(encA,encB, ss, motor_dir);
+	Dec2Bytes(encA, encB, ss, motor_dir);
 	HAL_UART_Transmit(&huart2, &dataTransmit[0], sizeof(dataTransmit), 1);
 	Byte2Dec();
-
 
 }

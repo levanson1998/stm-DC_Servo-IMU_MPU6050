@@ -1,2 +1,2 @@
 motor.c:32:6:Control_Motor	16	static
-motor.c:75:20:Get_Velocity	4	static
+motor.c:75:20:Get_Velocity	16	static

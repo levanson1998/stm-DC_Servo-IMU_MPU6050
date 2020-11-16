@@ -100,9 +100,9 @@ struct data_imu ReadMPU(){
 
 
 //	mpu.accel_x = roundf(((atan2((double)accel_y_temp,(double)accel_z_temp)+M_PI)*RA_TO_DEC*1000.0f));
-	mpu.accel_x = roundf((float)((atan2((double)accel_y_temp,(double)accel_z_temp))*RA_TO_DEC));
-	mpu.accel_y = roundf((float)((atan2((double)accel_x_temp,(double)accel_z_temp))*RA_TO_DEC));
-	mpu.accel_z = roundf((float)((atan2((double)accel_x_temp,(double)accel_y_temp))*RA_TO_DEC));
+	mpu.accel_x = roundf((float)((atan2((double)accel_y_temp,(double)accel_z_temp))*RA_TO_DEC)*1000);
+	mpu.accel_y = roundf((float)((atan2((double)accel_x_temp,(double)accel_z_temp))*RA_TO_DEC)*1000);
+	mpu.accel_z = roundf((float)((atan2((double)accel_x_temp,(double)accel_y_temp))*RA_TO_DEC)*1000);
 
 
 /*

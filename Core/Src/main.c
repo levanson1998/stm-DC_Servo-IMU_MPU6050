@@ -234,14 +234,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 // 		ss = sensor
 		struct data_imu ss = ReadMPU();
 
-		UartTransmit(enc[0], enc[1], ss, 2);
+		UartTransmit(enc[0], enc[1], ss, enc[3]);
 
-
-
-/*
-		if(v_target[0] >= 19.0f) vt=-0.5f;
-		else if (v_target[0] <= 2.0) vt = 0.5f;
-*/
 	}
 }
 

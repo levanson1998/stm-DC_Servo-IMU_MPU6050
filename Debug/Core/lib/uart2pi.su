@@ -1,3 +1,3 @@
 uart2pi.c:29:6:Dec2Bytes	16	static
-uart2pi.c:71:6:Byte2Dec	4	static
-uart2pi.c:91:6:UartTransmit	56	static
+uart2pi.c:78:6:Byte2Dec	4	static
+uart2pi.c:94:6:UartTransmit	56	static
