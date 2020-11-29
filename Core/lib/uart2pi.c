@@ -5,7 +5,6 @@
  *      Author: son
  */
 
-
 #include "math.h"
 #include <stdint.h>
 #include <stdio.h>
@@ -27,38 +26,41 @@
 		data: 1 byte
 */
 void Dec2Bytes(int16_t encA, int16_t encB, struct data_imu ss, uint8_t motor_dir){
-	dataTransmit[0]=(int)((((int16_t)encA)|0x00FF)>>8); // 8 bit H
-	dataTransmit[1]=(int)((((int16_t)encA)|0xFF00)); 	      // 8 bit L
 
-	dataTransmit[2]=(int)((((int16_t)encB)|0x00FF)>>8); // 8 bit H
-	dataTransmit[3]=(int)((((int16_t)encB)|0xFF00)); 	      // 8 bit L
+	dataTransmit[0] = 0x7F;
 
-	dataTransmit[4]=(int)((((int32_t)ss.accel_x)|0xFF00FFFF)>>16); // 8 bit H
-	dataTransmit[5]=(int)((((int32_t)ss.accel_x)|0xFFFF00FF)>>8); 	      // 8 bit M
-	dataTransmit[6]=(int)((((int32_t)ss.accel_x)|0xFFFFFF00));		// 8 bit L
+	dataTransmit[1]=(int)((((int16_t)encA)|0x00FF)>>8); // 8 bit H
+	dataTransmit[2]=(int)((((int16_t)encA)|0xFF00)); 	      // 8 bit L
 
-	dataTransmit[7]=(int)((((int32_t)ss.accel_y)|0xFF00FFFF)>>16); // 8 bit H
-	dataTransmit[8]=(int)((((int32_t)ss.accel_y)|0xFFFF00FF)>>8); 	      // 8 bit M
-	dataTransmit[9]=(int)((((int32_t)ss.accel_y)|0xFFFFFF00));		// 8 bit L
+	dataTransmit[3]=(int)((((int16_t)encB)|0x00FF)>>8); // 8 bit H
+	dataTransmit[4]=(int)((((int16_t)encB)|0xFF00)); 	      // 8 bit L
 
-	dataTransmit[10]=(int)((((int32_t)ss.accel_z)|0xFF00FFFF)>>16); // 8 bit H
-	dataTransmit[11]=(int)((((int32_t)ss.accel_z)|0xFFFF00FF)>>8); 	      // 8 bit M
-	dataTransmit[12]=(int)((((int32_t)ss.accel_z)|0xFFFFFF00));		// 8 bit L
+	dataTransmit[5]=(int)((((int32_t)ss.accel_x)|0xFF00FFFF)>>16); // 8 bit H
+	dataTransmit[6]=(int)((((int32_t)ss.accel_x)|0xFFFF00FF)>>8); 	      // 8 bit M
+	dataTransmit[7]=(int)((((int32_t)ss.accel_x)|0xFFFFFF00));		// 8 bit L
 
-	dataTransmit[13]=(int)((((int32_t)ss.gyro_x)|0xFF00FFFF)>>16); // 8 bit H
-	dataTransmit[14]=(int)((((int32_t)ss.gyro_x)|0xFFFF00FF)>>8); 	      // 8 bit M
-	dataTransmit[15]=(int)((((int32_t)ss.gyro_x)|0xFFFFFF00));		// 8 bit L
+	dataTransmit[8]=(int)((((int32_t)ss.accel_y)|0xFF00FFFF)>>16); // 8 bit H
+	dataTransmit[9]=(int)((((int32_t)ss.accel_y)|0xFFFF00FF)>>8); 	      // 8 bit M
+	dataTransmit[10]=(int)((((int32_t)ss.accel_y)|0xFFFFFF00));		// 8 bit L
 
-	dataTransmit[16]=(int)((((int32_t)ss.gyro_y)|0xFF00FFFF)>>16); // 8 bit H
-	dataTransmit[17]=(int)((((int32_t)ss.gyro_y)|0xFFFF00FF)>>8); 	      // 8 bit M
-	dataTransmit[18]=(int)((((int32_t)ss.gyro_y)|0xFFFFFF00));		// 8 bit L
+	dataTransmit[11]=(int)((((int32_t)ss.accel_z)|0xFF00FFFF)>>16); // 8 bit H
+	dataTransmit[12]=(int)((((int32_t)ss.accel_z)|0xFFFF00FF)>>8); 	      // 8 bit M
+	dataTransmit[13]=(int)((((int32_t)ss.accel_z)|0xFFFFFF00));		// 8 bit L
 
-	dataTransmit[19]=(int)((((int32_t)ss.gyro_z)|0xFF00FFFF)>>16); // 8 bit H
-	dataTransmit[20]=(int)((((int32_t)ss.gyro_z)|0xFFFF00FF)>>8); 	      // 8 bit M
-	dataTransmit[21]=(int)((((int32_t)ss.gyro_z)|0xFFFFFF00));		// 8 bit L
+	dataTransmit[14]=(int)((((int32_t)ss.gyro_x)|0xFF00FFFF)>>16); // 8 bit H
+	dataTransmit[15]=(int)((((int32_t)ss.gyro_x)|0xFFFF00FF)>>8); 	      // 8 bit M
+	dataTransmit[16]=(int)((((int32_t)ss.gyro_x)|0xFFFFFF00));		// 8 bit L
 
-	dataTransmit[22] = (int)motor_dir;
-//	dataTransmit[23] = 0x0A; // new line (in python using 'serial.readline()' to read data)
+	dataTransmit[17]=(int)((((int32_t)ss.gyro_y)|0xFF00FFFF)>>16); // 8 bit H
+	dataTransmit[18]=(int)((((int32_t)ss.gyro_y)|0xFFFF00FF)>>8); 	      // 8 bit M
+	dataTransmit[19]=(int)((((int32_t)ss.gyro_y)|0xFFFFFF00));		// 8 bit L
+
+	dataTransmit[20]=(int)((((int32_t)ss.gyro_z)|0xFF00FFFF)>>16); // 8 bit H
+	dataTransmit[21]=(int)((((int32_t)ss.gyro_z)|0xFFFF00FF)>>8); 	      // 8 bit M
+	dataTransmit[22]=(int)((((int32_t)ss.gyro_z)|0xFFFFFF00));		// 8 bit L
+
+	dataTransmit[23] = (int)motor_dir;
+	dataTransmit[24] = 0x1B; // new line (in python using 'serial.readline(-1)' to read data)
 
 /*
 	uint8_t i;
@@ -79,7 +81,6 @@ void Byte2Dec(){
 	_velo[0] = (float)receivebuffer[0] + (float)(((int16_t)receivebuffer[1]<<8)|(int16_t)receivebuffer[2])/10000.0F;
 	_velo[1] = (float)receivebuffer[3] + (float)(((int16_t)receivebuffer[4]<<8)|(int16_t)receivebuffer[5])/10000.0F;
 	_motor_dir = receivebuffer[6];
-
 
 //	_motor_dir = 2;
 //	_velo[0] = 0.04;

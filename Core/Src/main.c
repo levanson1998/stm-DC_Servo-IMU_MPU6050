@@ -66,6 +66,8 @@ float PID_Ki[2]={100.0, 100.0};
 float PID_Kd[2]={0.1, 0.1};
 float PID_T = 0.005f;
 
+int state_uart;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -223,22 +225,18 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 		test[3]=*(duty_cycle+1);
 		Control_Motor(*(duty_cycle), *(duty_cycle+1));
 */
-
-
 	}
 //	delay 100ms
 	else if(htim->Instance==htim9.Instance){
 		testt[5] = HAL_GetTick() - testt[6];
 		testt[6] = HAL_GetTick();
-
+		state_uart=HAL_UART_GetState(&huart2);
 // 		ss = sensor
 		struct data_imu ss = ReadMPU();
 
 		UartTransmit(enc[0], enc[1], ss, enc[3]);
-
 	}
 }
-
 
 /* USER CODE END 4 */
 

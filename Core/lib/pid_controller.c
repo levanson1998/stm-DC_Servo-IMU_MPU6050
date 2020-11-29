@@ -129,7 +129,9 @@ float * PID_Calculate(float *_PID_in, int PID_dir, volatile int16_t *_PID_curren
 
 
 		PID_out_[i]=fabs(PID_out[i]);
-
+		if (PID_in[i]==0){
+			PID_out[i]=0;
+		}
 	}
   	PID_out_[2]=(float)dir_;
 

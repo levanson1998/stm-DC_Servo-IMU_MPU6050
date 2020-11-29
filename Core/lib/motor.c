@@ -92,10 +92,10 @@ volatile int16_t * Get_Velocity(){
 	int i;
   	for (int i=0;i<2; i++){
 		if (enc[i]>=0){
-			enc[3]=enc[3]|(i+1);
+			enc[2]=enc[2]|(i+1);
 		}
 		else if (enc[i]<0){
-			enc[3]=enc[3]&(2-i);
+			enc[2]=enc[2]&(2-i);
 		}
   	}
 

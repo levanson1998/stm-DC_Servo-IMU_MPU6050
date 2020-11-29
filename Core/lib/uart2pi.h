@@ -18,7 +18,7 @@ void UartTransmit(int16_t encA, int16_t encB, struct data_imu ss, uint8_t motor_
 void Dec2Bytes(int16_t encA, int16_t encB, struct data_imu ss, uint8_t motor_dir);
 void Byte2Dec();
 
-uint8_t dataTransmit[23];
+uint8_t dataTransmit[25];
 uint8_t receivebuffer[7];
 float _velo[2];
 int _motor_dir;

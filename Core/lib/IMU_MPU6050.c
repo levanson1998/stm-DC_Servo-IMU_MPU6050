@@ -86,7 +86,6 @@ struct data_imu ReadMPU(){
 	struct data_imu mpu;
 	int8_t i;
 	int16_t DataBuffer16[7];
-	int16_t gyro_x_temp, gyro_y_temp, gyro_z_temp, accel_x_temp, accel_y_temp, accel_z_temp;
 	IMU_READ_DMA();
 
 	for(i=0;i<7;i++)
@@ -104,7 +103,6 @@ struct data_imu ReadMPU(){
 	mpu.accel_y = roundf((float)((atan2((double)accel_x_temp,(double)accel_z_temp))*RA_TO_DEC)*1000);
 	mpu.accel_z = roundf((float)((atan2((double)accel_x_temp,(double)accel_y_temp))*RA_TO_DEC)*1000);
 
-
 /*
 	mpu.accel_x = atan((accel_y_temp)/sqrt(pow(accel_x_temp,2)+pow(accel_z_temp,2)))*RA_TO_DEC;
 	mpu.accel_x = atan(gyroAngleX);
@@ -119,6 +117,14 @@ struct data_imu ReadMPU(){
 	mpu.gyro_x = roundf((float)gyro_x_temp*1000.0f/131.0F);
 	mpu.gyro_y = roundf((float)gyro_y_temp*1000.0f/131.0F);
 	mpu.gyro_z = roundf((float)gyro_z_temp*1000.0f/131.0F);
+
+	imu_test[0] = mpu.accel_x/1000.0f;
+	imu_test[1] = mpu.accel_y/1000.0f;
+	imu_test[2] = mpu.accel_z/1000.0f;
+
+	imu_test[3] = mpu.gyro_x/1000.0f;
+	imu_test[4] = mpu.gyro_y/1000.0f;
+	imu_test[5] = mpu.gyro_z/1000.0f;
 
 	return mpu;
 
