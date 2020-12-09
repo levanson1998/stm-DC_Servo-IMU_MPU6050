@@ -31,11 +31,14 @@
 //#include <stdint.h>
 #include "inttypes.h"
 
-#include "../lib/pid_controller.h"
+
+//#include "pid_controller.h"
 #include "../lib/IMU_MPU6050.h"
-#include "pid_controller.h"
+#include "../lib/motor.h"
+#include "../lib/pid_controller.h"
 #include "uart2pi.h"
-#include "motor.h"
+//#include "pid_controller.h"
+
 
 /* USER CODE END Includes */
 
@@ -61,12 +64,11 @@
 
 float testt[10];
 
-float PID_Kp[2]={25.0, 25.0};
-float PID_Ki[2]={100.0, 100.0};
-float PID_Kd[2]={0.1, 0.1};
-float PID_T = 0.005f;
 
 int state_uart;
+uint16_t time_error=0;
+uint8_t check_error = 0;
+
 
 /* USER CODE END PV */
 
@@ -78,7 +80,6 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
 
 /* USER CODE END 0 */
 
@@ -125,7 +126,7 @@ int main(void)
   HAL_TIM_Base_Start_IT(&htim5);
   HAL_TIM_Encoder_Start(&htim4, TIM_CHANNEL_ALL);
   HAL_TIM_Encoder_Start(&htim2, TIM_CHANNEL_ALL);
-  HAL_UART_Receive_DMA(&huart2 ,&receivebuffer[0], 7);
+  HAL_UART_Receive_DMA(&huart2 ,&receivebuffer[0], 9);
 
   MPU6050_INIT();
 
@@ -193,6 +194,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 		testt[7] = HAL_GetTick() - testt[8];
 		testt[8] = HAL_GetTick();
 
+
 		float *duty_cycles;
 
 		Get_Velocity();
@@ -201,8 +203,23 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 //		enc[1] = 10;
 
 		duty_cycles = PID_Calculate(_velo, _motor_dir, &enc[0]);
-		Control_Motor(*(duty_cycles), *(duty_cycles+1), *(duty_cycles+2));
-//		Control_Motor(400, 400, 3);
+
+//		keep safe when error serial
+		if (check_error == 1){
+			time_error = 0;
+		}
+
+		if(time_error <= 1000){
+			time_error += 1;
+			Control_Motor(0,0,0);
+		}
+		else{
+			Control_Motor(*(duty_cycles), *(duty_cycles+1), *(duty_cycles+2));
+		}
+
+
+
+//		Control_Motor(400, 300, 2);
 
 
 //		Control_Motor(*(duty_cycles), *(duty_cycles+1), *(duty_cycles+2));

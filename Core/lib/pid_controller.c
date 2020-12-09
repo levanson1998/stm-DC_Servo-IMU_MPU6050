@@ -15,6 +15,25 @@ float PID_out_min=-599.0f;
 
 int dir_= 0x00;
 
+float _PID_Kp[10]={5.0, 5.0,  // > 10.0f
+				   10.0, 10.0,  // <=10.0f
+				   20.0, 20.0,  // <=7.0f
+				   30.0, 30.0,  // <=4.5f
+				   35.0, 35.0}; //  <=2.0f
+float _PID_Ki[10]={350.0, 350.0,
+				   350.0, 350.0,
+				   300.0, 300.0,
+				   200.0, 200.0,
+				   150.0, 150.0};
+float _PID_Kd[10]={0.0, 0.0,
+			  	   0.0, 0.0,
+				   0.0, 0.0,
+				   0.0, 0.0,
+				   0.0, 0.0};
+
+float PID_T = 0.005f;
+
+
 //void PID_Init(float *Kp, float *Ki, float *Kd, float Ts) {
 //	for (int i = 0; i < 2; i++) {
 //		PID_Kp[i] = *(Kp+i);
@@ -87,6 +106,7 @@ float * PID_Calculate(float *_PID_in, int PID_dir, volatile int16_t *_PID_curren
 	PID_out[2]=(float)dir_;
 */
 
+
   	for (int i=0;i<2; i++){
 
   		if (!(PID_dir&(i+1))) PID_in[i]=*(_PID_in+i)*(-1);
@@ -97,6 +117,44 @@ float * PID_Calculate(float *_PID_in, int PID_dir, volatile int16_t *_PID_curren
   		PID_in[i]*=updateVel;
 
   		PID_current[i] = *(_PID_current+i);
+
+  		if(fabs(PID_in[i])>10.0f){ // > 10
+  			PID_Kp[i]=_PID_Kp[i];
+  			PID_Ki[i]=_PID_Ki[i];
+  			PID_Kd[i]=_PID_Kd[i];
+  		}
+  		if (fabs(PID_in[i])<=10.0f){ // 10 - 7
+  			PID_Kp[i]=_PID_Kp[i+2];
+  			PID_Ki[i]=_PID_Ki[i+2];
+  			PID_Kd[i]=_PID_Kd[i+2];
+  		}
+  		if (fabs(PID_in[i])<=7.0f){ // 7 - 4.5
+  			PID_Kp[i]=_PID_Kp[i+4];
+  			PID_Ki[i]=_PID_Ki[i+4];
+  			PID_Kd[i]=_PID_Kd[i+4];
+  		}
+  		if (fabs(PID_in[i])<=4.5f){ // 4.5 - 2
+  			PID_Kp[i]=_PID_Kp[i+6];
+  			PID_Ki[i]=_PID_Ki[i+6];
+  			PID_Kd[i]=_PID_Kd[i+6];
+  		}
+  		if (fabs(PID_in[i])<=2.0f){ // 0 - 2.0
+  			PID_Kp[i]=_PID_Kp[i+8];
+  			PID_Ki[i]=_PID_Ki[i+8];
+  			PID_Kd[i]=_PID_Kd[i+8];
+  		}
+  		if (fabs(PID_in[i])>20.0f){ // 0 - 2.0
+  			PID_Kp[i]=0.0;
+  			PID_Ki[i]=0.0;
+  			PID_Kd[i]=0.0;
+  		}
+
+//  		if(((PID_in_pre[i]==0) & (!PID_in[i]==0)) | (PID_in_pre[i]*PID_in[i] <= 0)){
+  		if(PID_in_pre[i]*PID_in[i] <= 0){
+  			PID_out[i]=265*PID_in[i]/fabs(PID_in[i]);
+  		}
+
+  		PID_in_pre[i] = PID_in[i];
 
 
 //		PID_Test[i] = PID_current[i];

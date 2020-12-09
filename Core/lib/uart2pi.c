@@ -12,6 +12,8 @@
 
 #include "uart2pi.h"
 
+
+
 /*
 	Input:
 		goc: 3 bytes
@@ -78,10 +80,18 @@ void Dec2Bytes(int16_t encA, int16_t encB, struct data_imu ss, uint8_t motor_dir
 
 */
 void Byte2Dec(){
-	_velo[0] = (float)receivebuffer[0] + (float)(((int16_t)receivebuffer[1]<<8)|(int16_t)receivebuffer[2])/10000.0F;
-	_velo[1] = (float)receivebuffer[3] + (float)(((int16_t)receivebuffer[4]<<8)|(int16_t)receivebuffer[5])/10000.0F;
-	_motor_dir = receivebuffer[6];
+	_velo[0] = (float)receivebuffer[1] + (float)(((int16_t)receivebuffer[2]<<8)|(int16_t)receivebuffer[3])/10000.0F;
+	_velo[1] = (float)receivebuffer[4] + (float)(((int16_t)receivebuffer[5]<<8)|(int16_t)receivebuffer[6])/10000.0F;
+	_motor_dir = receivebuffer[7];
 
+	if (!(receivebuffer[0] == 200) | !(receivebuffer[8] == 201)){
+		check_error = 1;
+	}
+	else{
+		check_error = 0;
+	}
+
+//	else check_error = 0;
 //	_motor_dir = 2;
 //	_velo[0] = 0.04;
 //	_velo[1] = 0.00;

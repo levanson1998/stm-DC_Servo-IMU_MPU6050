@@ -32,33 +32,40 @@ uint8_t mt_onetime=1;
 void Control_Motor(int16_t duty_r,int16_t duty_l, uint8_t dir_motor){
 	mt_test[0] = duty_r;
 	mt_test[1] = duty_l;
+
 	mt_test[2] = dir_motor;
 	__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_2, duty_r);
+	if((duty_r == 0) & (duty_l == 0)){
+		HAL_GPIO_WritePin(GPIOD, LED_BLU_Pin, GPIO_PIN_SET);
+	}
+	else{
+		HAL_GPIO_WritePin(GPIOD, LED_BLU_Pin, GPIO_PIN_RESET);
+	}
+
 	if(dir_motor&1){
 		HAL_GPIO_TogglePin(GPIOD, LED_GRE_Pin);
 //		tien
-		HAL_GPIO_WritePin(GPIOD, RPWM_R_Pin, GPIO_PIN_RESET);
-		HAL_GPIO_WritePin(GPIOD, LPWM_R_Pin, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(GPIOD, RPWM_R_Pin, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(GPIOD, LPWM_R_Pin, GPIO_PIN_RESET);
 	}
 	else{
 //		lui
-		HAL_GPIO_WritePin(GPIOD, RPWM_R_Pin, GPIO_PIN_SET);
-		HAL_GPIO_WritePin(GPIOD, LPWM_R_Pin, GPIO_PIN_RESET);
+		HAL_GPIO_WritePin(GPIOD, RPWM_R_Pin, GPIO_PIN_RESET);
+		HAL_GPIO_WritePin(GPIOD, LPWM_R_Pin, GPIO_PIN_SET);
 	}
 
 	__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, duty_l);
 	if(dir_motor&2){
 //		tien
 		HAL_GPIO_TogglePin(GPIOD, LED_RED_Pin);
-		HAL_GPIO_WritePin(GPIOD, RPWM_L_Pin, GPIO_PIN_RESET);
-		HAL_GPIO_WritePin(GPIOD, LPWM_L_Pin, GPIO_PIN_SET);
-	}
-	else{
-//		lui
 		HAL_GPIO_WritePin(GPIOD, RPWM_L_Pin, GPIO_PIN_SET);
 		HAL_GPIO_WritePin(GPIOD, LPWM_L_Pin, GPIO_PIN_RESET);
 	}
-
+	else{
+//		lui
+		HAL_GPIO_WritePin(GPIOD, RPWM_L_Pin, GPIO_PIN_RESET);
+		HAL_GPIO_WritePin(GPIOD, LPWM_L_Pin, GPIO_PIN_SET);
+	}
 }
 
 
@@ -84,7 +91,6 @@ volatile int16_t * Get_Velocity(){
 //	else enc[1]=1;
 
 	enc[1]= (TIM4->CNT)-5000;
-//	if ((TIM4->CNT)>5000) enc[3]=1;
 //	else enc[3]=-1;
 
 	TIM4->CNT=5000;
@@ -100,4 +106,15 @@ volatile int16_t * Get_Velocity(){
   	}
 
 	return 0;
+}
+
+void Cal_odom(volatile int16_t *encoder, float time){
+	float wheel_l, wheel_r, delta_s, theta, delta_theta;
+	wheel_r = *(encoder);
+	wheel_l = *(encoder+1);
+	delta_s = (wheel_l + wheel_r)*ENC2RAD;
+	theta = (wheel_l - wheel_r)*ENC2RAD*0.2275F;
+
+
+
 }
