@@ -11,8 +11,8 @@
 #endif /* LIB_PID_CONTROLLER_H_ */
 
 //			  time   banh xe  gear encoder
-// updateVel=(0.005)/(0.096/2)*30*64
-#define  updateVel 200.0f;
+// updateVel=(0.005)/(0.096/2)*30*64 (wrong)
+#define  updateVel 31.83f;
 
 //extern volatile int16_t PID_current[2];
 //extern volatile float PID_in[2];

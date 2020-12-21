@@ -201,6 +201,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 
 //		enc[0] = 12;
 //		enc[1] = 10;
+		enc_ser[0] += enc[0];
+		enc_ser[1] += enc[1];
 
 		duty_cycles = PID_Calculate(_velo, _motor_dir, &enc[0]);
 
@@ -212,8 +214,12 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 		if(time_error <= 1000){
 			time_error += 1;
 			Control_Motor(0,0,0);
+			if((time_error % 20) == 0){
+				HAL_GPIO_TogglePin(GPIOD, LED_ORG_Pin);
+			}
 		}
 		else{
+			HAL_GPIO_WritePin(GPIOD, LED_ORG_Pin, GPIO_PIN_SET);
 			Control_Motor(*(duty_cycles), *(duty_cycles+1), *(duty_cycles+2));
 		}
 
@@ -226,7 +232,6 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 
 
 /*		volatile float *data_Receive;*/
-		HAL_GPIO_TogglePin(GPIOD, LED_ORG_Pin);
 //		velo = Get_Velocity();
 /*		data_Receive = Receive_Uart();*/
 /*
@@ -251,7 +256,9 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 // 		ss = sensor
 		struct data_imu ss = ReadMPU();
 
-		UartTransmit(enc[0], enc[1], ss, enc[3]);
+		UartTransmit(enc_ser[0], enc_ser[1], ss, enc[2]);
+		enc_ser[0] = 0;
+		enc_ser[1] = 0;
 	}
 }
 
