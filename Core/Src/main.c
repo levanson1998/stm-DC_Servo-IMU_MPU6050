@@ -224,7 +224,6 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 		}
 
 
-
 //		Control_Motor(400, 300, 2);
 
 

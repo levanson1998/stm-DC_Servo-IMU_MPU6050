@@ -62,6 +62,9 @@ void MPU6050_INIT(){
 		uint8_t j;
 		for(j=0;j<=11;j++){
 			HAL_GPIO_TogglePin(GPIOD, LED_GRE_Pin);
+			HAL_GPIO_TogglePin(GPIOD, LED_RED_Pin);
+			HAL_GPIO_TogglePin(GPIOD, LED_ORG_Pin);
+			HAL_GPIO_TogglePin(GPIOD, LED_BLU_Pin);
 			HAL_Delay(100);
 		}
 	}
