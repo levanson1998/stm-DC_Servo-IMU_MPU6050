@@ -22,6 +22,7 @@ volatile int16_t encoder[2];
 volatile float /*enc[2], */test[10];
 volatile int16_t enc[3];
 volatile int16_t enc_ser[2];
+volatile int32_t enc_test[2];
 float last_theta;
 int16_t mt_test[6];
 

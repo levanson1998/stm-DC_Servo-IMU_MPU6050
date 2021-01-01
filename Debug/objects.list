@@ -11,6 +11,7 @@
 "Core/Src/usart.o"
 "Core/Startup/startup_stm32f411vetx.o"
 "Core/lib/IMU_MPU6050.o"
+"Core/lib/IMU_MPU9250.o"
 "Core/lib/motor.o"
 "Core/lib/pid_controller.o"
 "Core/lib/uart2pi.o"

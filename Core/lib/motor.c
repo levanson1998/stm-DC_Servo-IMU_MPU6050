@@ -43,7 +43,7 @@ void Control_Motor(int16_t duty_r,int16_t duty_l, uint8_t dir_motor){
 	}
 
 	if(dir_motor&1){
-		HAL_GPIO_TogglePin(GPIOD, LED_GRE_Pin);
+//		HAL_GPIO_TogglePin(GPIOD, LED_GRE_Pin);
 //		tien
 		HAL_GPIO_WritePin(GPIOD, RPWM_R_Pin, GPIO_PIN_SET);
 		HAL_GPIO_WritePin(GPIOD, LPWM_R_Pin, GPIO_PIN_RESET);
@@ -57,7 +57,7 @@ void Control_Motor(int16_t duty_r,int16_t duty_l, uint8_t dir_motor){
 	__HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_1, duty_l);
 	if(dir_motor&2){
 //		tien
-		HAL_GPIO_TogglePin(GPIOD, LED_RED_Pin);
+//		HAL_GPIO_TogglePin(GPIOD, LED_RED_Pin);
 		HAL_GPIO_WritePin(GPIOD, RPWM_L_Pin, GPIO_PIN_SET);
 		HAL_GPIO_WritePin(GPIOD, LPWM_L_Pin, GPIO_PIN_RESET);
 	}
