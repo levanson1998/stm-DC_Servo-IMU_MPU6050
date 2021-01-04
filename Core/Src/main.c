@@ -31,9 +31,8 @@
 //#include <stdint.h>
 #include "inttypes.h"
 
-
 //#include "pid_controller.h"
-#include "../lib/IMU_MPU6050.h"
+//#include "../lib/IMU_MPU6050.h"
 #include "../lib/IMU_MPU9250.h"
 #include "../lib/motor.h"
 #include "../lib/pid_controller.h"
@@ -63,7 +62,7 @@
 
 /* PID Controller*/
 
-float testt[10];
+float testt[10], test_abc;
 
 
 int state_uart;
@@ -121,8 +120,14 @@ int main(void)
   MX_TIM5_Init();
   MX_I2C1_Init();
 
+
   /* USER CODE BEGIN 2 */
+  HAL_Delay(1000);
+  MPU9250_Reset();
   MPU9250_INIT();
+  initMPU9250();
+  initAK8963();
+
   HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
   HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);
   HAL_TIM_Encoder_Start(&htim4, TIM_CHANNEL_ALL);
@@ -195,7 +200,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 		testt[7] = HAL_GetTick() - testt[8];
 		testt[8] = HAL_GetTick();
 
-		IMU9250_READ_DMA();
+//		IMU9250_READ_DMA();
 
 		float *duty_cycles;
 
@@ -255,9 +260,12 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 	else if(htim->Instance==htim9.Instance){
 		testt[5] = HAL_GetTick() - testt[6];
 		testt[6] = HAL_GetTick();
+		test_abc++;
 		state_uart=HAL_UART_GetState(&huart2);
 // 		ss = sensor
 
+//		IMU9250_READ_DMA();
+		struct data_mpu9250 ss = ReadMPU9250();
 /*
 		struct data_imu ss = ReadMPU();
 
@@ -265,6 +273,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 		enc_ser[0] = 0;
 		enc_ser[1] = 0;
 */
+
 	}
 }
 

@@ -165,6 +165,9 @@
 #define ZA_OFFSET_H      0x7D
 #define ZA_OFFSET_L      0x7E
 
+#define RA_TO_DEC400	63.66197724F
+#define RA_TO_DEC		57.2957795131F
+
 // Using the MSENSR-9250 breakout board, ADO is set to 0
 // Seven-bit device address is 110100 for ADO = 0 and 110101 for ADO = 1
 //mbed uses the eight-bit device address, so shift seven-bit addresses left by one!
@@ -175,9 +178,37 @@
 //
 //#endif
 
+//struct data imu;
+struct data_mpu9250{
+	float temp;
+	float gyro_x;
+	float gyro_y;
+	float gyro_z;
+	float accel_x;
+	float accel_y;
+	float accel_z;
+	float mag_x;
+	float mag_y;
+	float mag_z;
+	float roll;
+	float pitch;
+	float yaw;
+};
+
+uint8_t DataBuffer9250[18];
+uint8_t DataBuffer9250ST;
 uint8_t TxBuffer9250[2], RxBuffer9250[7];
+float gyro_x_temp1, gyro_y_temp1, gyro_z_temp1, accel_x_temp1, accel_y_temp1, accel_z_temp1, mag_x_temp1, mag_y_temp1, mag_z_temp1;
+float mpu9250_test[9];
+float m_x, m_y;
+
 void IMU9250_READ_DMA();
 void MPU9250_INIT();
+void MPU9250_Reset();
+void initAK8963();
+void initMPU9250();
+void IMU_9250_READ_MAG();
+struct data_mpu9250 ReadMPU9250();
 
 
 #endif /* LIB_IMU_MPU9250_H_ */
