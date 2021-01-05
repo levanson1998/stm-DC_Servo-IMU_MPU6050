@@ -195,11 +195,16 @@ struct data_mpu9250{
 	float yaw;
 };
 
+float pre_yaw, delta_yaw;
+float current_dt, pre_dt, dt_now, dt_led;
+float mpu9250_test[9];
+int16_t DataBuffer16_test[10];
+
+
 uint8_t DataBuffer9250[18];
 uint8_t DataBuffer9250ST;
 uint8_t TxBuffer9250[2], RxBuffer9250[7];
 float gyro_x_temp1, gyro_y_temp1, gyro_z_temp1, accel_x_temp1, accel_y_temp1, accel_z_temp1, mag_x_temp1, mag_y_temp1, mag_z_temp1;
-float mpu9250_test[9];
 float m_x, m_y;
 
 void IMU9250_READ_DMA();
@@ -209,6 +214,7 @@ void initAK8963();
 void initMPU9250();
 void IMU_9250_READ_MAG();
 struct data_mpu9250 ReadMPU9250();
+float IMU_Kalman(float newrate, float newangle, float dt);
 
 
 #endif /* LIB_IMU_MPU9250_H_ */

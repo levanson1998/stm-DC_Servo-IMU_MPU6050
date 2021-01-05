@@ -318,11 +318,13 @@ void initAK8963(){
 	HAL_Delay(200);
 
 	// Set magnetometer data resolution and sample ODR
-	TxBuffer9250[0] = 0x86;
+	TxBuffer9250[0] = 0x16;
 	HAL_I2C_Mem_Write(&hi2c1, AK8963_ADDRESS, AK8963_CNTL, 1, TxBuffer9250, 1, 1000);
 	HAL_Delay(200);
 
 	// -----------------------
+//	HAL_I2C_Mem_Read(&hi2c1, AK8963_ADDRESS, AK8963_ASAX, I2C_MEMADD_SIZE_8BIT, &RxBuffer9250[2], 3, 1000);
+
 	HAL_I2C_Mem_Read(&hi2c1, AK8963_ADDRESS, AK8963_WHO_AM_I, I2C_MEMADD_SIZE_8BIT, &RxBuffer9250[1], 1, 1000);
 	HAL_Delay(100);
 
@@ -420,9 +422,16 @@ struct data_mpu9250 ReadMPU9250(){
 	int16_t DataBuffer16[10];
 	IMU9250_READ_DMA();
 
-	for(i=0;i<9;i++)
+	for(i=0;i<6;i++)
 	{
 		DataBuffer16[i] = (int16_t)(((uint16_t)DataBuffer9250[2*i]<<8) | DataBuffer9250[2*i + 1]);
+		DataBuffer16_test[i]=DataBuffer16[i];
+	}
+
+	for(i=6;i<9;i++)
+	{
+		DataBuffer16[i] = (int16_t)((DataBuffer9250[2*i]) | (uint16_t)DataBuffer9250[2*i + 1]<<8);
+		DataBuffer16_test[i]=DataBuffer16[i];
 	}
 
 	accel_x_temp1 = DataBuffer16[0];
@@ -453,7 +462,7 @@ struct data_mpu9250 ReadMPU9250(){
 
 	mpu.gyro_x = DataBuffer16[3];
 	mpu.gyro_y = DataBuffer16[4];
-	mpu.gyro_z = DataBuffer16[5];
+	mpu.gyro_z = DataBuffer16[5]/131.0f;
 
 /*
 	mpu.gyro_x = roundf((float)gyro_x_temp1*1000.0f/131.0F);
@@ -470,35 +479,114 @@ struct data_mpu9250 ReadMPU9250(){
 	mpu.mag_y = DataBuffer16[7];
 	mpu.mag_z = DataBuffer16[8];
 
-	mpu9250_test[0] = mpu.accel_x/1000.0f;
-	mpu9250_test[1] = mpu.accel_y/1000.0f;
-	mpu9250_test[2] = mpu.accel_z/1000.0f;
-
-	mpu9250_test[3] = mpu.gyro_x/1000.0f;
-	mpu9250_test[4] = mpu.gyro_y/1000.0f;
-	mpu9250_test[5] = mpu.gyro_z/1000.0f;
+//	mpu9250_test[0] = mpu.accel_x/1000.0f;
+//	mpu9250_test[1] = mpu.accel_y/1000.0f;
+//	mpu9250_test[2] = mpu.accel_z/1000.0f;
+//
+//	mpu9250_test[3] = mpu.gyro_x/1000.0f;
+//	mpu9250_test[4] = mpu.gyro_y/1000.0f;
+//	mpu9250_test[5] = mpu.gyro_z/1000.0f;
 
 //	mpu.accel_x = roundf((float)((atan2((double)accel_y_temp1,(double)accel_z_temp1))*RA_TO_DEC)*1000);
 	mpu.roll=atan2(mpu.accel_y, mpu.accel_z);
 	mpu.pitch=atan2(-mpu.accel_x, sqrt(pow(mpu.accel_y, 2)+pow(mpu.accel_z, 2)));
 	m_x=mpu.mag_x*cos(mpu.pitch)+mpu.mag_z*sin(mpu.pitch);
 	m_y=mpu.mag_x*sin(mpu.roll)*sin(mpu.pitch)+mpu.mag_y*cos(mpu.roll)-mpu.mag_z*sin(mpu.roll)*cos(mpu.pitch);
-	mpu.yaw=atan2(m_y, m_x);
 
-	mpu9250_test[6] = mpu.roll*RA_TO_DEC;
-	mpu9250_test[7] = mpu.pitch*RA_TO_DEC;
+
+	mpu.yaw=atan2(m_y, m_x);
+	mpu9250_test[7] = mpu.yaw*RA_TO_DEC;
+
+
+
+	pre_dt = current_dt;
+	current_dt = HAL_GetTick();
+	dt_now = (current_dt-pre_dt)/1000.0F;
+	dt_led += dt_now;
+
+	if (dt_led > 3.0){
+		DataBuffer9250[12] = 0;
+		DataBuffer9250[13] = 0;
+		DataBuffer9250[14] = 0;
+		DataBuffer9250[15] = 0;
+		DataBuffer9250[16] = 0;
+		DataBuffer9250[17] = 0;
+//		TxBuffer9250[0] = 0x82;
+//		HAL_I2C_Mem_Write(&hi2c1, AK8963_ADDRESS, AK8963_CNTL, 1, TxBuffer9250, 1, 1000);
+		if (dt_led > 5.0){
+//			HAL_I2C_Mem_Read(&hi2c1, AK8963_ADDRESS, AK8963_XOUT_L, I2C_MEMADD_SIZE_8BIT, &DataBuffer9250[12], 6, 1000);
+			dt_led = 0;
+		}
+		HAL_GPIO_TogglePin(GPIOD, LED_GRE_Pin);
+	}
+
+	delta_yaw = (-pre_yaw+mpu.yaw);
+	mpu9250_test[5] = mpu.gyro_z*dt_now;
+	mpu9250_test[6] = delta_yaw;
+	pre_yaw = mpu.yaw;
+	mpu.yaw = IMU_Kalman(mpu.gyro_z*dt_now, mpu.yaw, dt_now);
+
+//	mpu9250_test[6] = mpu.roll*RA_TO_DEC;
+//	mpu9250_test[7] = mpu.pitch*RA_TO_DEC;
 	mpu9250_test[8] = mpu.yaw*RA_TO_DEC;
 
 	return mpu;
-
 }
 
+float bias = 0, angle;
+float P[2][2]={{0, 0}, {0, 0}};
+float K[2] = {0, 0};
+int8_t imu_onetime = 0;
+float kalman_test[4];
+
+float IMU_Kalman(float newrate, float newangle, float dt){
+	float rate, S, y, Q_angle, R_measure, Q_bias;
+	Q_angle = 0.001F;
+	Q_bias = 0.003F;
+	R_measure = 0.03F;
+
+	rate = newrate - bias;
+	if (imu_onetime == 0){
+		angle = newangle;
+		imu_onetime = 1;
+	}
+
+	angle += dt*rate;
+	kalman_test[0] = newrate;
+
+	P[0][0] += dt*(dt*P[1][1]-P[0][1]-P[1][0]+Q_angle);
+	P[0][1] -= dt*P[1][1];
+	P[1][0] -= dt*P[1][1];
+	P[1][1] += Q_bias*dt;
+
+	S = P[0][0] + R_measure;
+
+	K[0] = P[0][0]/S;
+	K[1] = P[1][0]/S;
+
+	y = newangle - angle;
+	kalman_test[1] = newangle;
+	kalman_test[2] = y;
+	angle += K[0]*y;
+	bias += K[1]*y;
+//	bias = roundf(bias*10000.0f)/10000.0f;
+
+	P[0][0] -= K[0]*P[0][0];
+	P[0][1] -= K[0]*P[0][1];
+	P[1][0] -= K[1]*P[0][0];
+	P[1][1] -= K[1]*P[0][1];
+
+	return angle;
+}
 
 void IMU9250_READ_DMA(){
-	HAL_I2C_Mem_Read(&hi2c1, MPU9250_ADDRESS, ACCEL_XOUT_H, I2C_MEMADD_SIZE_8BIT, &DataBuffer9250[0], 6, 1);
-	HAL_I2C_Mem_Read(&hi2c1, MPU9250_ADDRESS, GYRO_XOUT_H, I2C_MEMADD_SIZE_8BIT, &DataBuffer9250[6], 6, 1);
+	HAL_I2C_Mem_Read(&hi2c1, AK8963_ADDRESS, AK8963_ST1, I2C_MEMADD_SIZE_8BIT, &RxBuffer9250[5], 1, 1000);
+	HAL_I2C_Mem_Read(&hi2c1, AK8963_ADDRESS, AK8963_ST2, I2C_MEMADD_SIZE_8BIT, &RxBuffer9250[6], 1, 1000);
+	HAL_I2C_Mem_Read(&hi2c1, MPU9250_ADDRESS, ACCEL_XOUT_H, I2C_MEMADD_SIZE_8BIT, &DataBuffer9250[0], 6, 1000);
+	HAL_I2C_Mem_Read(&hi2c1, MPU9250_ADDRESS, GYRO_XOUT_H, I2C_MEMADD_SIZE_8BIT, &DataBuffer9250[6], 6, 1000);
+	HAL_I2C_Mem_Read(&hi2c1, AK8963_ADDRESS, AK8963_XOUT_L, I2C_MEMADD_SIZE_8BIT, &DataBuffer9250[12], 6, 1000);
 
-	IMU_9250_READ_MAG();
+//	IMU_9250_READ_MAG();
 //	HAL_I2C_Mem_Read(&hi2c1, AK8963_ADDRESS, AK8963_XOUT_L, I2C_MEMADD_SIZE_8BIT, &DataBuffer9250[12], 6, 1);
 
 //	HAL_I2C_Mem_Read(&hi2c1, AK8963_ADDRESS, AK8963_ST1, I2C_MEMADD_SIZE_8BIT, &DataBuffer9250ST, 1, 1);
@@ -509,7 +597,7 @@ void IMU9250_READ_DMA(){
 }
 
 void IMU_9250_READ_MAG(){
-	HAL_I2C_Mem_Read(&hi2c1, AK8963_ADDRESS, AK8963_XOUT_L, I2C_MEMADD_SIZE_8BIT, &DataBuffer9250[12], 7, 1);
+//	HAL_I2C_Mem_Read(&hi2c1, AK8963_ADDRESS, AK8963_XOUT_L, I2C_MEMADD_SIZE_8BIT, &DataBuffer9250[12], 6, 1);
 
 	TxBuffer9250[0] = AK8963_ADDRESS | 0x80;
 	HAL_I2C_Mem_Write(&hi2c1, MPU9250_ADDRESS, I2C_SLV0_ADDR, 1, TxBuffer9250, 1, 1000);
@@ -519,6 +607,8 @@ void IMU_9250_READ_MAG(){
 
 	TxBuffer9250[0] = 0x87;
 	HAL_I2C_Mem_Write(&hi2c1, MPU9250_ADDRESS, I2C_SLV0_CTRL, 1, TxBuffer9250, 1, 1000);
+
+	HAL_I2C_Mem_Read(&hi2c1, MPU9250_ADDRESS, EXT_SENS_DATA_00, I2C_MEMADD_SIZE_8BIT, &DataBuffer9250[12], 6, 1000);
 
 
 }
