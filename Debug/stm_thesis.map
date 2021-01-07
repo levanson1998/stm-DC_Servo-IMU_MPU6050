@@ -5691,55 +5691,55 @@ LOAD /opt/st/stm32cubeide_1.4.0/plugins/com.st.stm32cube.ide.mcu.externaltools.g
                 0x0000000000000f44       0x22 /opt/st/stm32cubeide_1.4.0/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.linux64_1.4.0.202007081208/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v7e-m/fpv4-sp/hard/crtn.o
 OUTPUT(stm_thesis.elf elf32-littlearm)
 
-.debug_info     0x0000000000000000    0x13a86
+.debug_info     0x0000000000000000    0x13a91
  .debug_info    0x0000000000000000      0x504 Core/Src/dma.o
  .debug_info    0x0000000000000504      0x52a Core/Src/gpio.o
  .debug_info    0x0000000000000a2e      0xa19 Core/Src/i2c.o
- .debug_info    0x0000000000001447     0x1fbf Core/Src/main.o
- .debug_info    0x0000000000003406      0x38c Core/Src/stm32f4xx_hal_msp.o
- .debug_info    0x0000000000003792      0x96b Core/Src/stm32f4xx_it.o
- .debug_info    0x00000000000040fd      0x985 Core/Src/sysmem.o
- .debug_info    0x0000000000004a82      0x57e Core/Src/system_stm32f4xx.o
- .debug_info    0x0000000000005000      0xfec Core/Src/tim.o
- .debug_info    0x0000000000005fec      0xb11 Core/Src/usart.o
- .debug_info    0x0000000000006afd       0x22 Core/Startup/startup_stm32f411vetx.o
- .debug_info    0x0000000000006b1f     0x1450 Core/lib/IMU_MPU9250.o
- .debug_info    0x0000000000007f6f     0x1186 Core/lib/motor.o
- .debug_info    0x00000000000090f5      0xc64 Core/lib/pid_controller.o
- .debug_info    0x0000000000009d59      0x8d5 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
- .debug_info    0x000000000000a62e      0xd98 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
- .debug_info    0x000000000000b3c6      0x960 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.o
- .debug_info    0x000000000000bd26      0x7d7 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.o
- .debug_info    0x000000000000c4fd     0x242b Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.o
- .debug_info    0x000000000000e928      0x92a Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o
- .debug_info    0x000000000000f252     0x24a1 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o
- .debug_info    0x00000000000116f3     0x114f Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.o
- .debug_info    0x0000000000012842     0x1244 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.o
+ .debug_info    0x0000000000001447     0x1fca Core/Src/main.o
+ .debug_info    0x0000000000003411      0x38c Core/Src/stm32f4xx_hal_msp.o
+ .debug_info    0x000000000000379d      0x96b Core/Src/stm32f4xx_it.o
+ .debug_info    0x0000000000004108      0x985 Core/Src/sysmem.o
+ .debug_info    0x0000000000004a8d      0x57e Core/Src/system_stm32f4xx.o
+ .debug_info    0x000000000000500b      0xfec Core/Src/tim.o
+ .debug_info    0x0000000000005ff7      0xb11 Core/Src/usart.o
+ .debug_info    0x0000000000006b08       0x22 Core/Startup/startup_stm32f411vetx.o
+ .debug_info    0x0000000000006b2a     0x1450 Core/lib/IMU_MPU9250.o
+ .debug_info    0x0000000000007f7a     0x1186 Core/lib/motor.o
+ .debug_info    0x0000000000009100      0xc64 Core/lib/pid_controller.o
+ .debug_info    0x0000000000009d64      0x8d5 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
+ .debug_info    0x000000000000a639      0xd98 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
+ .debug_info    0x000000000000b3d1      0x960 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.o
+ .debug_info    0x000000000000bd31      0x7d7 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.o
+ .debug_info    0x000000000000c508     0x242b Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.o
+ .debug_info    0x000000000000e933      0x92a Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o
+ .debug_info    0x000000000000f25d     0x24a1 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o
+ .debug_info    0x00000000000116fe     0x114f Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.o
+ .debug_info    0x000000000001284d     0x1244 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.o
 
-.debug_abbrev   0x0000000000000000     0x2a95
+.debug_abbrev   0x0000000000000000     0x2a9e
  .debug_abbrev  0x0000000000000000      0x107 Core/Src/dma.o
  .debug_abbrev  0x0000000000000107      0x134 Core/Src/gpio.o
  .debug_abbrev  0x000000000000023b      0x1aa Core/Src/i2c.o
- .debug_abbrev  0x00000000000003e5      0x28f Core/Src/main.o
- .debug_abbrev  0x0000000000000674      0x109 Core/Src/stm32f4xx_hal_msp.o
- .debug_abbrev  0x000000000000077d      0x181 Core/Src/stm32f4xx_it.o
- .debug_abbrev  0x00000000000008fe      0x19b Core/Src/sysmem.o
- .debug_abbrev  0x0000000000000a99      0x12b Core/Src/system_stm32f4xx.o
- .debug_abbrev  0x0000000000000bc4      0x1eb Core/Src/tim.o
- .debug_abbrev  0x0000000000000daf      0x1b3 Core/Src/usart.o
- .debug_abbrev  0x0000000000000f62       0x12 Core/Startup/startup_stm32f411vetx.o
- .debug_abbrev  0x0000000000000f74      0x2a9 Core/lib/IMU_MPU9250.o
- .debug_abbrev  0x000000000000121d      0x275 Core/lib/motor.o
- .debug_abbrev  0x0000000000001492      0x1f8 Core/lib/pid_controller.o
- .debug_abbrev  0x000000000000168a      0x1f2 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
- .debug_abbrev  0x000000000000187c      0x2fa Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
- .debug_abbrev  0x0000000000001b76      0x1f1 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.o
- .debug_abbrev  0x0000000000001d67      0x1c9 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.o
- .debug_abbrev  0x0000000000001f30      0x263 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.o
- .debug_abbrev  0x0000000000002193      0x245 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o
- .debug_abbrev  0x00000000000023d8      0x23f Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o
- .debug_abbrev  0x0000000000002617      0x22d Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.o
- .debug_abbrev  0x0000000000002844      0x251 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.o
+ .debug_abbrev  0x00000000000003e5      0x298 Core/Src/main.o
+ .debug_abbrev  0x000000000000067d      0x109 Core/Src/stm32f4xx_hal_msp.o
+ .debug_abbrev  0x0000000000000786      0x181 Core/Src/stm32f4xx_it.o
+ .debug_abbrev  0x0000000000000907      0x19b Core/Src/sysmem.o
+ .debug_abbrev  0x0000000000000aa2      0x12b Core/Src/system_stm32f4xx.o
+ .debug_abbrev  0x0000000000000bcd      0x1eb Core/Src/tim.o
+ .debug_abbrev  0x0000000000000db8      0x1b3 Core/Src/usart.o
+ .debug_abbrev  0x0000000000000f6b       0x12 Core/Startup/startup_stm32f411vetx.o
+ .debug_abbrev  0x0000000000000f7d      0x2a9 Core/lib/IMU_MPU9250.o
+ .debug_abbrev  0x0000000000001226      0x275 Core/lib/motor.o
+ .debug_abbrev  0x000000000000149b      0x1f8 Core/lib/pid_controller.o
+ .debug_abbrev  0x0000000000001693      0x1f2 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
+ .debug_abbrev  0x0000000000001885      0x2fa Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
+ .debug_abbrev  0x0000000000001b7f      0x1f1 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.o
+ .debug_abbrev  0x0000000000001d70      0x1c9 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.o
+ .debug_abbrev  0x0000000000001f39      0x263 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.o
+ .debug_abbrev  0x000000000000219c      0x245 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o
+ .debug_abbrev  0x00000000000023e1      0x23f Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o
+ .debug_abbrev  0x0000000000002620      0x22d Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.o
+ .debug_abbrev  0x000000000000284d      0x251 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.o
 
 .debug_aranges  0x0000000000000000      0xfe0
  .debug_aranges
@@ -5789,30 +5789,30 @@ OUTPUT(stm_thesis.elf elf32-littlearm)
  .debug_aranges
                 0x0000000000000e10      0x1d0 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.o
 
-.debug_ranges   0x0000000000000000      0xea0
+.debug_ranges   0x0000000000000000      0xeb8
  .debug_ranges  0x0000000000000000       0x10 Core/Src/dma.o
  .debug_ranges  0x0000000000000010       0x10 Core/Src/gpio.o
  .debug_ranges  0x0000000000000020       0x20 Core/Src/i2c.o
- .debug_ranges  0x0000000000000040       0x28 Core/Src/main.o
- .debug_ranges  0x0000000000000068       0x10 Core/Src/stm32f4xx_hal_msp.o
- .debug_ranges  0x0000000000000078       0x78 Core/Src/stm32f4xx_it.o
- .debug_ranges  0x00000000000000f0       0x10 Core/Src/sysmem.o
- .debug_ranges  0x0000000000000100       0x18 Core/Src/system_stm32f4xx.o
- .debug_ranges  0x0000000000000118       0x58 Core/Src/tim.o
- .debug_ranges  0x0000000000000170       0x20 Core/Src/usart.o
- .debug_ranges  0x0000000000000190       0x20 Core/Startup/startup_stm32f411vetx.o
- .debug_ranges  0x00000000000001b0       0x48 Core/lib/IMU_MPU9250.o
- .debug_ranges  0x00000000000001f8       0x20 Core/lib/motor.o
- .debug_ranges  0x0000000000000218       0x10 Core/lib/pid_controller.o
- .debug_ranges  0x0000000000000228       0xe0 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
- .debug_ranges  0x0000000000000308      0x108 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
- .debug_ranges  0x0000000000000410       0x80 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.o
- .debug_ranges  0x0000000000000490       0x48 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.o
- .debug_ranges  0x00000000000004d8      0x2b8 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.o
- .debug_ranges  0x0000000000000790       0x78 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o
- .debug_ranges  0x0000000000000808      0x398 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o
- .debug_ranges  0x0000000000000ba0      0x140 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.o
- .debug_ranges  0x0000000000000ce0      0x1c0 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.o
+ .debug_ranges  0x0000000000000040       0x40 Core/Src/main.o
+ .debug_ranges  0x0000000000000080       0x10 Core/Src/stm32f4xx_hal_msp.o
+ .debug_ranges  0x0000000000000090       0x78 Core/Src/stm32f4xx_it.o
+ .debug_ranges  0x0000000000000108       0x10 Core/Src/sysmem.o
+ .debug_ranges  0x0000000000000118       0x18 Core/Src/system_stm32f4xx.o
+ .debug_ranges  0x0000000000000130       0x58 Core/Src/tim.o
+ .debug_ranges  0x0000000000000188       0x20 Core/Src/usart.o
+ .debug_ranges  0x00000000000001a8       0x20 Core/Startup/startup_stm32f411vetx.o
+ .debug_ranges  0x00000000000001c8       0x48 Core/lib/IMU_MPU9250.o
+ .debug_ranges  0x0000000000000210       0x20 Core/lib/motor.o
+ .debug_ranges  0x0000000000000230       0x10 Core/lib/pid_controller.o
+ .debug_ranges  0x0000000000000240       0xe0 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
+ .debug_ranges  0x0000000000000320      0x108 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
+ .debug_ranges  0x0000000000000428       0x80 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.o
+ .debug_ranges  0x00000000000004a8       0x48 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.o
+ .debug_ranges  0x00000000000004f0      0x2b8 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.o
+ .debug_ranges  0x00000000000007a8       0x78 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o
+ .debug_ranges  0x0000000000000820      0x398 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o
+ .debug_ranges  0x0000000000000bb8      0x140 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.o
+ .debug_ranges  0x0000000000000cf8      0x1c0 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.o
 
 .debug_macro    0x0000000000000000    0x18a13
  .debug_macro   0x0000000000000000      0x200 Core/Src/dma.o
@@ -5900,30 +5900,30 @@ OUTPUT(stm_thesis.elf elf32-littlearm)
  .debug_macro   0x0000000000018644      0x1e7 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.o
  .debug_macro   0x000000000001882b      0x1e8 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.o
 
-.debug_line     0x0000000000000000     0xde53
+.debug_line     0x0000000000000000     0xde50
  .debug_line    0x0000000000000000      0x6cb Core/Src/dma.o
  .debug_line    0x00000000000006cb      0x6e1 Core/Src/gpio.o
  .debug_line    0x0000000000000dac      0x70e Core/Src/i2c.o
- .debug_line    0x00000000000014ba      0x94c Core/Src/main.o
- .debug_line    0x0000000000001e06      0x6ce Core/Src/stm32f4xx_hal_msp.o
- .debug_line    0x00000000000024d4      0x7cd Core/Src/stm32f4xx_it.o
- .debug_line    0x0000000000002ca1      0x49a Core/Src/sysmem.o
- .debug_line    0x000000000000313b      0x6e9 Core/Src/system_stm32f4xx.o
- .debug_line    0x0000000000003824      0x832 Core/Src/tim.o
- .debug_line    0x0000000000004056      0x713 Core/Src/usart.o
- .debug_line    0x0000000000004769       0x85 Core/Startup/startup_stm32f411vetx.o
- .debug_line    0x00000000000047ee      0xa79 Core/lib/IMU_MPU9250.o
- .debug_line    0x0000000000005267      0x90a Core/lib/motor.o
- .debug_line    0x0000000000005b71      0x506 Core/lib/pid_controller.o
- .debug_line    0x0000000000006077      0x8d3 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
- .debug_line    0x000000000000694a      0x9f7 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
- .debug_line    0x0000000000007341      0x9a1 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.o
- .debug_line    0x0000000000007ce2      0x876 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.o
- .debug_line    0x0000000000008558     0x1b81 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.o
- .debug_line    0x000000000000a0d9      0x92b Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o
- .debug_line    0x000000000000aa04     0x1790 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o
- .debug_line    0x000000000000c194      0xcde Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.o
- .debug_line    0x000000000000ce72      0xfe1 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.o
+ .debug_line    0x00000000000014ba      0x949 Core/Src/main.o
+ .debug_line    0x0000000000001e03      0x6ce Core/Src/stm32f4xx_hal_msp.o
+ .debug_line    0x00000000000024d1      0x7cd Core/Src/stm32f4xx_it.o
+ .debug_line    0x0000000000002c9e      0x49a Core/Src/sysmem.o
+ .debug_line    0x0000000000003138      0x6e9 Core/Src/system_stm32f4xx.o
+ .debug_line    0x0000000000003821      0x832 Core/Src/tim.o
+ .debug_line    0x0000000000004053      0x713 Core/Src/usart.o
+ .debug_line    0x0000000000004766       0x85 Core/Startup/startup_stm32f411vetx.o
+ .debug_line    0x00000000000047eb      0xa79 Core/lib/IMU_MPU9250.o
+ .debug_line    0x0000000000005264      0x90a Core/lib/motor.o
+ .debug_line    0x0000000000005b6e      0x506 Core/lib/pid_controller.o
+ .debug_line    0x0000000000006074      0x8d3 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
+ .debug_line    0x0000000000006947      0x9f7 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
+ .debug_line    0x000000000000733e      0x9a1 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.o
+ .debug_line    0x0000000000007cdf      0x876 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.o
+ .debug_line    0x0000000000008555     0x1b81 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.o
+ .debug_line    0x000000000000a0d6      0x92b Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o
+ .debug_line    0x000000000000aa01     0x1790 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o
+ .debug_line    0x000000000000c191      0xcde Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.o
+ .debug_line    0x000000000000ce6f      0xfe1 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.o
 
 .debug_str      0x0000000000000000    0x939fd
  .debug_str     0x0000000000000000    0x874c3 Core/Src/dma.o

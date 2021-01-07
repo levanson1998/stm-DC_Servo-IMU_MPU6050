@@ -27,23 +27,23 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   ALLOC
  11 .ARM.attributes 00000030  00000000  00000000  0002023c  2**0
                   CONTENTS, READONLY
- 12 .debug_info   00013a86  00000000  00000000  0002026c  2**0
+ 12 .debug_info   00013a91  00000000  00000000  0002026c  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_abbrev 00002a95  00000000  00000000  00033cf2  2**0
+ 13 .debug_abbrev 00002a9e  00000000  00000000  00033cfd  2**0
                   CONTENTS, READONLY, DEBUGGING
- 14 .debug_aranges 00000fe0  00000000  00000000  00036788  2**3
+ 14 .debug_aranges 00000fe0  00000000  00000000  000367a0  2**3
                   CONTENTS, READONLY, DEBUGGING
- 15 .debug_ranges 00000ea0  00000000  00000000  00037768  2**3
+ 15 .debug_ranges 00000eb8  00000000  00000000  00037780  2**3
                   CONTENTS, READONLY, DEBUGGING
- 16 .debug_macro  00018a13  00000000  00000000  00038608  2**0
+ 16 .debug_macro  00018a13  00000000  00000000  00038638  2**0
                   CONTENTS, READONLY, DEBUGGING
- 17 .debug_line   0000de53  00000000  00000000  0005101b  2**0
+ 17 .debug_line   0000de50  00000000  00000000  0005104b  2**0
                   CONTENTS, READONLY, DEBUGGING
- 18 .debug_str    000939fd  00000000  00000000  0005ee6e  2**0
+ 18 .debug_str    000939fd  00000000  00000000  0005ee9b  2**0
                   CONTENTS, READONLY, DEBUGGING
- 19 .comment      0000007b  00000000  00000000  000f286b  2**0
+ 19 .comment      0000007b  00000000  00000000  000f2898  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  00004e44  00000000  00000000  000f28e8  2**2
+ 20 .debug_frame  00004e44  00000000  00000000  000f2914  2**2
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -1706,7 +1706,6 @@ int main(void)
   MX_I2C1_Init();
  80011cc:	f7ff ff3e 	bl	800104c <MX_I2C1_Init>
 
-
   /* USER CODE BEGIN 2 */
   HAL_Delay(1000);
  80011d0:	f44f 707a 	mov.w	r0, #1000	; 0x3e8
@@ -1907,7 +1906,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
  800131c:	4b6b      	ldr	r3, [pc, #428]	; (80014cc <HAL_TIM_PeriodElapsedCallback+0x1bc>)
  800131e:	681b      	ldr	r3, [r3, #0]
  8001320:	429a      	cmp	r2, r3
- 8001322:	f040 80a0 	bne.w	8001466 <HAL_TIM_PeriodElapsedCallback+0x156>
+ 8001322:	f040 809b 	bne.w	800145c <HAL_TIM_PeriodElapsedCallback+0x14c>
 		testt[7] = HAL_GetTick() - testt[8];
  8001326:	f002 f967 	bl	80035f8 <HAL_GetTick>
  800132a:	ee07 0a90 	vmov	s15, r0
@@ -2031,15 +2030,18 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
  80013fe:	1ad3      	subs	r3, r2, r3
  8001400:	b29b      	uxth	r3, r3
  8001402:	2b00      	cmp	r3, #0
- 8001404:	d129      	bne.n	800145a <HAL_TIM_PeriodElapsedCallback+0x14a>
+ 8001404:	d15d      	bne.n	80014c2 <HAL_TIM_PeriodElapsedCallback+0x1b2>
 				HAL_GPIO_TogglePin(GPIOD, LED_ORG_Pin);
  8001406:	f44f 5100 	mov.w	r1, #8192	; 0x2000
  800140a:	483a      	ldr	r0, [pc, #232]	; (80014f4 <HAL_TIM_PeriodElapsedCallback+0x1e4>)
  800140c:	f002 ff5f 	bl	80042ce <HAL_GPIO_TogglePin>
- 8001410:	e023      	b.n	800145a <HAL_TIM_PeriodElapsedCallback+0x14a>
-			}
-		}
-		else{
+		enc_ser[0] = 0;
+		enc_ser[1] = 0;
+*/
+
+	}
+}
+ 8001410:	e057      	b.n	80014c2 <HAL_TIM_PeriodElapsedCallback+0x1b2>
 			HAL_GPIO_WritePin(GPIOD, LED_ORG_Pin, GPIO_PIN_SET);
  8001412:	2201      	movs	r2, #1
  8001414:	f44f 5100 	mov.w	r1, #8192	; 0x2000
@@ -2066,56 +2068,48 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
  8001452:	b2db      	uxtb	r3, r3
  8001454:	461a      	mov	r2, r3
  8001456:	f001 fc63 	bl	8002d20 <Control_Motor>
-		}
-
-
-		struct data_mpu9250 ss = ReadMPU9250();
- 800145a:	f107 0308 	add.w	r3, r7, #8
- 800145e:	4618      	mov	r0, r3
- 8001460:	f000 ffa2 	bl	80023a8 <ReadMPU9250>
-		enc_ser[0] = 0;
-		enc_ser[1] = 0;
-*/
-
-	}
 }
- 8001464:	e02d      	b.n	80014c2 <HAL_TIM_PeriodElapsedCallback+0x1b2>
+ 800145a:	e032      	b.n	80014c2 <HAL_TIM_PeriodElapsedCallback+0x1b2>
 	else if(htim->Instance==htim9.Instance){
- 8001466:	687b      	ldr	r3, [r7, #4]
- 8001468:	681a      	ldr	r2, [r3, #0]
- 800146a:	4b23      	ldr	r3, [pc, #140]	; (80014f8 <HAL_TIM_PeriodElapsedCallback+0x1e8>)
- 800146c:	681b      	ldr	r3, [r3, #0]
- 800146e:	429a      	cmp	r2, r3
- 8001470:	d127      	bne.n	80014c2 <HAL_TIM_PeriodElapsedCallback+0x1b2>
+ 800145c:	687b      	ldr	r3, [r7, #4]
+ 800145e:	681a      	ldr	r2, [r3, #0]
+ 8001460:	4b25      	ldr	r3, [pc, #148]	; (80014f8 <HAL_TIM_PeriodElapsedCallback+0x1e8>)
+ 8001462:	681b      	ldr	r3, [r3, #0]
+ 8001464:	429a      	cmp	r2, r3
+ 8001466:	d12c      	bne.n	80014c2 <HAL_TIM_PeriodElapsedCallback+0x1b2>
 		testt[5] = HAL_GetTick() - testt[6];
- 8001472:	f002 f8c1 	bl	80035f8 <HAL_GetTick>
- 8001476:	ee07 0a90 	vmov	s15, r0
- 800147a:	eeb8 7a67 	vcvt.f32.u32	s14, s15
+ 8001468:	f002 f8c6 	bl	80035f8 <HAL_GetTick>
+ 800146c:	ee07 0a90 	vmov	s15, r0
+ 8001470:	eeb8 7a67 	vcvt.f32.u32	s14, s15
+ 8001474:	4b16      	ldr	r3, [pc, #88]	; (80014d0 <HAL_TIM_PeriodElapsedCallback+0x1c0>)
+ 8001476:	edd3 7a06 	vldr	s15, [r3, #24]
+ 800147a:	ee77 7a67 	vsub.f32	s15, s14, s15
  800147e:	4b14      	ldr	r3, [pc, #80]	; (80014d0 <HAL_TIM_PeriodElapsedCallback+0x1c0>)
- 8001480:	edd3 7a06 	vldr	s15, [r3, #24]
- 8001484:	ee77 7a67 	vsub.f32	s15, s14, s15
- 8001488:	4b11      	ldr	r3, [pc, #68]	; (80014d0 <HAL_TIM_PeriodElapsedCallback+0x1c0>)
- 800148a:	edc3 7a05 	vstr	s15, [r3, #20]
+ 8001480:	edc3 7a05 	vstr	s15, [r3, #20]
 		testt[6] = HAL_GetTick();
- 800148e:	f002 f8b3 	bl	80035f8 <HAL_GetTick>
- 8001492:	ee07 0a90 	vmov	s15, r0
- 8001496:	eef8 7a67 	vcvt.f32.u32	s15, s15
- 800149a:	4b0d      	ldr	r3, [pc, #52]	; (80014d0 <HAL_TIM_PeriodElapsedCallback+0x1c0>)
- 800149c:	edc3 7a06 	vstr	s15, [r3, #24]
+ 8001484:	f002 f8b8 	bl	80035f8 <HAL_GetTick>
+ 8001488:	ee07 0a90 	vmov	s15, r0
+ 800148c:	eef8 7a67 	vcvt.f32.u32	s15, s15
+ 8001490:	4b0f      	ldr	r3, [pc, #60]	; (80014d0 <HAL_TIM_PeriodElapsedCallback+0x1c0>)
+ 8001492:	edc3 7a06 	vstr	s15, [r3, #24]
 		test_abc++;
- 80014a0:	4b16      	ldr	r3, [pc, #88]	; (80014fc <HAL_TIM_PeriodElapsedCallback+0x1ec>)
- 80014a2:	edd3 7a00 	vldr	s15, [r3]
- 80014a6:	eeb7 7a00 	vmov.f32	s14, #112	; 0x3f800000  1.0
- 80014aa:	ee77 7a87 	vadd.f32	s15, s15, s14
- 80014ae:	4b13      	ldr	r3, [pc, #76]	; (80014fc <HAL_TIM_PeriodElapsedCallback+0x1ec>)
- 80014b0:	edc3 7a00 	vstr	s15, [r3]
+ 8001496:	4b19      	ldr	r3, [pc, #100]	; (80014fc <HAL_TIM_PeriodElapsedCallback+0x1ec>)
+ 8001498:	edd3 7a00 	vldr	s15, [r3]
+ 800149c:	eeb7 7a00 	vmov.f32	s14, #112	; 0x3f800000  1.0
+ 80014a0:	ee77 7a87 	vadd.f32	s15, s15, s14
+ 80014a4:	4b15      	ldr	r3, [pc, #84]	; (80014fc <HAL_TIM_PeriodElapsedCallback+0x1ec>)
+ 80014a6:	edc3 7a00 	vstr	s15, [r3]
 		state_uart=HAL_UART_GetState(&huart2);
- 80014b4:	4812      	ldr	r0, [pc, #72]	; (8001500 <HAL_TIM_PeriodElapsedCallback+0x1f0>)
- 80014b6:	f005 fcff 	bl	8006eb8 <HAL_UART_GetState>
- 80014ba:	4603      	mov	r3, r0
- 80014bc:	461a      	mov	r2, r3
- 80014be:	4b11      	ldr	r3, [pc, #68]	; (8001504 <HAL_TIM_PeriodElapsedCallback+0x1f4>)
- 80014c0:	601a      	str	r2, [r3, #0]
+ 80014aa:	4815      	ldr	r0, [pc, #84]	; (8001500 <HAL_TIM_PeriodElapsedCallback+0x1f0>)
+ 80014ac:	f005 fd04 	bl	8006eb8 <HAL_UART_GetState>
+ 80014b0:	4603      	mov	r3, r0
+ 80014b2:	461a      	mov	r2, r3
+ 80014b4:	4b13      	ldr	r3, [pc, #76]	; (8001504 <HAL_TIM_PeriodElapsedCallback+0x1f4>)
+ 80014b6:	601a      	str	r2, [r3, #0]
+		struct data_mpu9250 ss = ReadMPU9250();
+ 80014b8:	f107 0308 	add.w	r3, r7, #8
+ 80014bc:	4618      	mov	r0, r3
+ 80014be:	f000 ff73 	bl	80023a8 <ReadMPU9250>
 }
  80014c2:	bf00      	nop
  80014c4:	3740      	adds	r7, #64	; 0x40
