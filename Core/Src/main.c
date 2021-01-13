@@ -32,11 +32,11 @@
 #include "inttypes.h"
 
 //#include "pid_controller.h"
-//#include "../lib/IMU_MPU6050.h"
-#include "../lib/IMU_MPU9250.h"
+#include "../lib/IMU_MPU6050.h"
+//#include "../lib/IMU_MPU9250.h"
 #include "../lib/motor.h"
 #include "../lib/pid_controller.h"
-#include "uart2pi.h"
+#include "../lib/uart2pi.h"
 //#include "pid_controller.h"
 
 
@@ -122,10 +122,13 @@ int main(void)
 
   /* USER CODE BEGIN 2 */
   HAL_Delay(1000);
+  MPU6050_INIT();
+/*
   MPU9250_Reset();
   MPU9250_INIT();
   initMPU9250();
   initAK8963();
+*/
 
   HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
   HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);
@@ -265,14 +268,14 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 // 		ss = sensor
 
 //		IMU9250_READ_DMA();
-		struct data_mpu9250 ss = ReadMPU9250();
-/*
+//		struct data_mpu9250 ss = ReadMPU9250();
+
 		struct data_imu ss = ReadMPU();
 
 		UartTransmit(enc_ser[0], enc_ser[1], ss, enc[2]);
 		enc_ser[0] = 0;
 		enc_ser[1] = 0;
-*/
+
 
 	}
 }
