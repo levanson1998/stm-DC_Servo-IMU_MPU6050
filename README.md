@@ -1,0 +1,18 @@
+# stm-DC_Servo-IMU_MPU6050
+![alt text](https://github.com/levanson1998/stm-DC_Servo-IMU_MPU6050/blob/master/image/gpio1.png)
+![alt text](https://github.com/levanson1998/stm-DC_Servo-IMU_MPU6050/blob/master/image/gpio2.png)
+![alt text](https://github.com/levanson1998/stm-DC_Servo-IMU_MPU6050/blob/master/image/gpio3.png)
+![alt text](https://github.com/levanson1998/stm-DC_Servo-IMU_MPU6050/blob/master/image/gpio4.png)
+![alt text](https://github.com/levanson1998/stm-DC_Servo-IMU_MPU6050/blob/master/image/clock.png)
+![alt text](https://github.com/levanson1998/stm-DC_Servo-IMU_MPU6050/blob/master/image/tim1.png)
+![alt text](https://github.com/levanson1998/stm-DC_Servo-IMU_MPU6050/blob/master/image/tim1_2.png)
+![alt text](https://github.com/levanson1998/stm-DC_Servo-IMU_MPU6050/blob/master/image/tim1_3.png)
+![alt text](https://github.com/levanson1998/stm-DC_Servo-IMU_MPU6050/blob/master/image/tim2_1.png)
+![alt text](https://github.com/levanson1998/stm-DC_Servo-IMU_MPU6050/blob/master/image/tim4_1.png)
+![alt text](https://github.com/levanson1998/stm-DC_Servo-IMU_MPU6050/blob/master/image/gpio_1.png)
+![alt text](https://github.com/levanson1998/stm-DC_Servo-IMU_MPU6050/blob/master/image/gpio_2.png)
+![alt text](https://github.com/levanson1998/stm-DC_Servo-IMU_MPU6050/blob/master/image/gpio_3.png)
+![alt text](https://github.com/levanson1998/stm-DC_Servo-IMU_MPU6050/blob/master/image/gpio_4.png)
+![alt text](https://github.com/levanson1998/stm-DC_Servo-IMU_MPU6050/blob/master/image/gpio_5.png)
+![alt text](https://github.com/levanson1998/stm-DC_Servo-IMU_MPU6050/blob/master/image/gpio_6.png)
+
