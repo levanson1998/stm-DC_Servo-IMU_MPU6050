@@ -27,42 +27,49 @@
 		chieu: 1 byte
 		data: 1 byte
 */
-void Dec2Bytes(int16_t encA, int16_t encB, struct data_imu ss, uint8_t motor_dir){
+void Dec2Bytes(int16_t encA, int16_t encB, struct data_mpu9250 ss, uint8_t motor_dir){
+	int32_t yaw;
+	yaw = ss.yaw*1000000;
 
 	dataTransmit[0] = 0x7F;
 
-	dataTransmit[1]=(int)((((int16_t)encA)|0x00FF)>>8); // 8 bit H
-	dataTransmit[2]=(int)((((int16_t)encA)|0xFF00)); 	      // 8 bit L
+	dataTransmit[1]=(int8_t)((((int16_t)encA)|0x00FF)>>8); // 8 bit H
+	dataTransmit[2]=(int8_t)((((int16_t)encA)|0xFF00)); 	      // 8 bit L
 
-	dataTransmit[3]=(int)((((int16_t)encB)|0x00FF)>>8); // 8 bit H
-	dataTransmit[4]=(int)((((int16_t)encB)|0xFF00)); 	      // 8 bit L
+	dataTransmit[3]=(int8_t)((((int16_t)encB)|0x00FF)>>8); // 8 bit H
+	dataTransmit[4]=(int8_t)((((int16_t)encB)|0xFF00)); 	      // 8 bit L
 
-	dataTransmit[5]=(int)((((int32_t)ss.accel_x)|0xFF00FFFF)>>16); // 8 bit H
-	dataTransmit[6]=(int)((((int32_t)ss.accel_x)|0xFFFF00FF)>>8); 	      // 8 bit M
-	dataTransmit[7]=(int)((((int32_t)ss.accel_x)|0xFFFFFF00));		// 8 bit L
+	dataTransmit[5]=(int8_t)((((int32_t)ss.accel_x)|0xFF00FFFF)>>16); // 8 bit H
+	dataTransmit[6]=(int8_t)((((int32_t)ss.accel_x)|0xFFFF00FF)>>8); 	      // 8 bit M
+	dataTransmit[7]=(int8_t)((((int32_t)ss.accel_x)|0xFFFFFF00));		// 8 bit L
 
-	dataTransmit[8]=(int)((((int32_t)ss.accel_y)|0xFF00FFFF)>>16); // 8 bit H
-	dataTransmit[9]=(int)((((int32_t)ss.accel_y)|0xFFFF00FF)>>8); 	      // 8 bit M
-	dataTransmit[10]=(int)((((int32_t)ss.accel_y)|0xFFFFFF00));		// 8 bit L
+	dataTransmit[8]=(int8_t)((((int32_t)ss.accel_y)|0xFF00FFFF)>>16); // 8 bit H
+	dataTransmit[9]=(int8_t)((((int32_t)ss.accel_y)|0xFFFF00FF)>>8); 	      // 8 bit M
+	dataTransmit[10]=(int8_t)((((int32_t)ss.accel_y)|0xFFFFFF00));		// 8 bit L
 
-	dataTransmit[11]=(int)((((int32_t)ss.accel_z)|0xFF00FFFF)>>16); // 8 bit H
-	dataTransmit[12]=(int)((((int32_t)ss.accel_z)|0xFFFF00FF)>>8); 	      // 8 bit M
-	dataTransmit[13]=(int)((((int32_t)ss.accel_z)|0xFFFFFF00));		// 8 bit L
+	dataTransmit[11]=(int8_t)((((int32_t)ss.accel_z)|0xFF00FFFF)>>16); // 8 bit H
+	dataTransmit[12]=(int8_t)((((int32_t)ss.accel_z)|0xFFFF00FF)>>8); 	      // 8 bit M
+	dataTransmit[13]=(int8_t)((((int32_t)ss.accel_z)|0xFFFFFF00));		// 8 bit L
 
-	dataTransmit[14]=(int)((((int32_t)ss.gyro_x)|0xFF00FFFF)>>16); // 8 bit H
-	dataTransmit[15]=(int)((((int32_t)ss.gyro_x)|0xFFFF00FF)>>8); 	      // 8 bit M
-	dataTransmit[16]=(int)((((int32_t)ss.gyro_x)|0xFFFFFF00));		// 8 bit L
+	dataTransmit[14]=(int8_t)((((int32_t)ss.gyro_x)|0xFF00FFFF)>>16); // 8 bit H
+	dataTransmit[15]=(int8_t)((((int32_t)ss.gyro_x)|0xFFFF00FF)>>8); 	      // 8 bit M
+	dataTransmit[16]=(int8_t)((((int32_t)ss.gyro_x)|0xFFFFFF00));		// 8 bit L
 
-	dataTransmit[17]=(int)((((int32_t)ss.gyro_y)|0xFF00FFFF)>>16); // 8 bit H
-	dataTransmit[18]=(int)((((int32_t)ss.gyro_y)|0xFFFF00FF)>>8); 	      // 8 bit M
-	dataTransmit[19]=(int)((((int32_t)ss.gyro_y)|0xFFFFFF00));		// 8 bit L
+	dataTransmit[17]=(int8_t)((((int32_t)ss.gyro_y)|0xFF00FFFF)>>16); // 8 bit H
+	dataTransmit[18]=(int8_t)((((int32_t)ss.gyro_y)|0xFFFF00FF)>>8); 	      // 8 bit M
+	dataTransmit[19]=(int8_t)((((int32_t)ss.gyro_y)|0xFFFFFF00));		// 8 bit L
 
-	dataTransmit[20]=(int)((((int32_t)ss.gyro_z)|0xFF00FFFF)>>16); // 8 bit H
-	dataTransmit[21]=(int)((((int32_t)ss.gyro_z)|0xFFFF00FF)>>8); 	      // 8 bit M
-	dataTransmit[22]=(int)((((int32_t)ss.gyro_z)|0xFFFFFF00));		// 8 bit L
+	dataTransmit[20]=(int8_t)((((int32_t)ss.gyro_z)|0xFF00FFFF)>>16); // 8 bit H
+	dataTransmit[21]=(int8_t)((((int32_t)ss.gyro_z)|0xFFFF00FF)>>8); 	      // 8 bit M
+	dataTransmit[22]=(int8_t)((((int32_t)ss.gyro_z)|0xFFFFFF00));		// 8 bit L
 
-	dataTransmit[23] = (int)motor_dir;
-	dataTransmit[24] = 0x1B; // new line (in python using 'serial.readline(-1)' to read data)
+	dataTransmit[23]=(int8_t)((((int32_t)yaw)|0x00FFFFFF)>>24); // 8 bit H
+	dataTransmit[24]=(int8_t)((((int32_t)yaw)|0xFF00FFFF)>>16); // 8 bit H
+	dataTransmit[25]=(int8_t)((((int32_t)yaw)|0xFFFF00FF)>>8); 	      // 8 bit M
+	dataTransmit[26]=(int8_t)((((int32_t)yaw)|0xFFFFFF00));		// 8 bit L
+
+	dataTransmit[27] = (int8_t)motor_dir;
+	dataTransmit[28] = 0x1B; // new line (in python using 'serial.readline(-1)' to read data)
 
 /*
 	uint8_t i;
@@ -102,7 +109,7 @@ void Byte2Dec(){
  * GPIO: PA2 -> TX
  * 		 PA3 -> RX
 */
-void UartTransmit(int16_t encA, int16_t encB, struct data_imu ss, uint8_t motor_dir){
+void UartTransmit(int16_t encA, int16_t encB, struct data_mpu9250 ss, uint8_t motor_dir){
 	Byte2Dec();
 	uart_test[0] = encA;
 	uart_test[1] = encB;

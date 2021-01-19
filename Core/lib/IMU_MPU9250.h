@@ -167,6 +167,7 @@
 
 #define RA_TO_DEC400	63.66197724F
 #define RA_TO_DEC		57.2957795131F
+#define DEC2RAD			0.01745329252F
 
 // Using the MSENSR-9250 breakout board, ADO is set to 0
 // Seven-bit device address is 110100 for ADO = 0 and 110101 for ADO = 1
@@ -196,10 +197,13 @@ struct data_mpu9250{
 };
 
 float mag_norm;
-float pre_yaw, delta_yaw;
+float yaw_cur, pre_yaw, delta_yaw;
+
 float current_dt, pre_dt, dt_now, dt_led;
 float mpu9250_test[9];
 int16_t DataBuffer16_test[10];
+
+float med_val[5];
 
 uint8_t DataBuffer9250[20];
 uint8_t DataBuffer9250ST;
@@ -208,7 +212,8 @@ float gyro_x_temp1, gyro_y_temp1, gyro_z_temp1, accel_x_temp1, accel_y_temp1, ac
 float m_x, m_y;
 int16_t origin_mag_x, origin_mag_y;
 
-
+//float max_val[5];
+//float min_val[5];
 
 void IMU9250_READ_DMA();
 void MPU9250_INIT();

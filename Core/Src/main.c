@@ -232,7 +232,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 		}
 
 
-//		struct data_mpu9250 ss = ReadMPU9250();
+		struct data_mpu9250 ss = ReadMPU9250();
 //		Control_Motor(400, 300, 2);
 
 
@@ -267,11 +267,13 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 //		IMU9250_READ_DMA();
 //		struct data_mpu9250 ss = ReadMPU9250();
 
-		struct data_imu ss = ReadMPU();
+//		struct data_imu ss = ReadMPU();
 
+/*
 		UartTransmit(enc_ser[0], enc_ser[1], ss, enc[2]);
 		enc_ser[0] = 0;
 		enc_ser[1] = 0;
+*/
 
 
 	}
