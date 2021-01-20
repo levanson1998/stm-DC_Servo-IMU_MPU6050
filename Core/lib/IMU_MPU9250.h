@@ -167,6 +167,7 @@
 
 #define RA_TO_DEC400	63.66197724F
 #define RA_TO_DEC		57.2957795131F
+#define DEC2RAD			0.01745329252F
 
 // Using the MSENSR-9250 breakout board, ADO is set to 0
 // Seven-bit device address is 110100 for ADO = 0 and 110101 for ADO = 1
@@ -195,17 +196,24 @@ struct data_mpu9250{
 	float yaw;
 };
 
-float pre_yaw, delta_yaw;
+float mag_norm;
+float yaw_cur, pre_yaw, delta_yaw;
+
 float current_dt, pre_dt, dt_now, dt_led;
 float mpu9250_test[9];
 int16_t DataBuffer16_test[10];
 
+float med_val[5];
 
-uint8_t DataBuffer9250[18];
+uint8_t DataBuffer9250[20];
 uint8_t DataBuffer9250ST;
 uint8_t TxBuffer9250[2], RxBuffer9250[7];
 float gyro_x_temp1, gyro_y_temp1, gyro_z_temp1, accel_x_temp1, accel_y_temp1, accel_z_temp1, mag_x_temp1, mag_y_temp1, mag_z_temp1;
 float m_x, m_y;
+int16_t origin_mag_x, origin_mag_y;
+
+//float max_val[5];
+//float min_val[5];
 
 void IMU9250_READ_DMA();
 void MPU9250_INIT();
@@ -215,8 +223,8 @@ void initMPU9250();
 void IMU_9250_READ_MAG();
 struct data_mpu9250 ReadMPU9250();
 float IMU_Kalman(float newrate, float newangle, float dt);
+void getMaxMinValue(float value, int8_t count_val);
 
 
 #endif /* LIB_IMU_MPU9250_H_ */
-
 

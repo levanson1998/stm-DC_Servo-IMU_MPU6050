@@ -32,8 +32,8 @@
 #include "inttypes.h"
 
 //#include "pid_controller.h"
-#include "../lib/IMU_MPU6050.h"
-//#include "../lib/IMU_MPU9250.h"
+//#include "../lib/IMU_MPU6050.h"
+#include "../lib/IMU_MPU9250.h"
 #include "../lib/motor.h"
 #include "../lib/pid_controller.h"
 #include "../lib/uart2pi.h"
@@ -68,6 +68,7 @@ float testt[10], test_abc;
 int state_uart;
 uint16_t time_error=0;
 uint8_t check_error = 0;
+struct data_mpu9250 ss = {};
 
 
 /* USER CODE END PV */
@@ -122,13 +123,10 @@ int main(void)
 
   /* USER CODE BEGIN 2 */
   HAL_Delay(1000);
-  MPU6050_INIT();
-/*
   MPU9250_Reset();
   MPU9250_INIT();
   initMPU9250();
   initAK8963();
-*/
 
   HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
   HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);
@@ -234,49 +232,19 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 			Control_Motor(*(duty_cycles), *(duty_cycles+1), *(duty_cycles+2));
 		}
 
-
 //		struct data_mpu9250 ss = ReadMPU9250();
-//		Control_Motor(400, 300, 2);
-
-
-//		Control_Motor(*(duty_cycles), *(duty_cycles+1), *(duty_cycles+2));
-
-
-/*		volatile float *data_Receive;*/
-//		velo = Get_Velocity();
-/*		data_Receive = Receive_Uart();*/
-/*
-		for(int i=0;i<2;i++){
-			PID_current[i]=*(velo+i*2);
-//			v_target[i]=*(data_Receive+i);
-//			v_target[i] = 10.0f;
-		}
-*/
-/*
-		duty_cycle = PID_Calculate(v_target, PID_current);
-		test[2]=*(duty_cycle);
-		test[3]=*(duty_cycle+1);
-		Control_Motor(*(duty_cycle), *(duty_cycle+1));
-*/
+		ss = ReadMPU9250();
 	}
 //	delay 100ms
 	else if(htim->Instance==htim9.Instance){
 		testt[5] = HAL_GetTick() - testt[6];
 		testt[6] = HAL_GetTick();
 		test_abc++;
-		state_uart=HAL_UART_GetState(&huart2);
+//		state_uart=HAL_UART_GetState(&huart2);
 // 		ss = sensor
-
-//		IMU9250_READ_DMA();
-//		struct data_mpu9250 ss = ReadMPU9250();
-
-		struct data_imu ss = ReadMPU();
-
 		UartTransmit(enc_ser[0], enc_ser[1], ss, enc[2]);
 		enc_ser[0] = 0;
 		enc_ser[1] = 0;
-
-
 	}
 }
 
